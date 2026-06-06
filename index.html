@@ -766,12 +766,6 @@ input.pixel-input:focus{border-color:var(--gold)}
 
       <div class="match-vs" id="match-vs">VS</div>
       <div class="score-overlay" id="score-display">0 - 0</div>
-
-      <div class="tb-box">
-        <div class="box"><div class="k">状态</div><div class="v" id="tb-phase">未开赛</div></div>
-        <div class="box"><div class="k">距开球</div><div class="v" id="tb-countdown">--:--</div></div>
-        <div class="box"><div class="k">🐙 状态</div><div class="v" id="tb-octo-state">待预测</div></div>
-      </div>
     </div>
 
     <div class="action-bar">
@@ -1255,13 +1249,6 @@ function renderStage(){
   else if(ms>-2*3600*1000)$('#match-sub').textContent='🔴 进行中 · 开球 '+m.kickoff;
   else $('#match-sub').textContent='⏱ 已结束 · 等结果';
 
-  $('#tb-phase').textContent=phaseCN(phase);
-  if(ms>0){$('#tb-countdown').textContent=fmtCountdown(ms);$('#tb-countdown').className='v'}
-  else if(ms>-2*3600*1000){$('#tb-countdown').textContent='进行中';$('#tb-countdown').className='v ok'}
-  else{$('#tb-countdown').textContent='待输入';$('#tb-countdown').className='v danger'}
-
-  const octoState=state.currentLocked?(state.currentPrediction==='home'?'锁定·主队':'锁定·客队'):'待预测';
-  $('#tb-octo-state').textContent=octoState;
   moveOctopus();
 }
 
