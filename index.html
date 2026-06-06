@@ -741,8 +741,6 @@ input.pixel-input:focus{border-color:var(--gold)}
       <div class="seaweed" style="left:20%;height:70px;animation-delay:.5s"></div>
       <div class="seaweed" style="right:20%;height:55px;animation-delay:.3s"></div>
       <div class="seaweed" style="right:8%;height:75px;animation-delay:.8s"></div>
-      <div class="bone-pile left" id="bone-pile-left"></div>
-      <div class="bone-pile right" id="bone-pile-right"></div>
 
       <div class="pool left" id="pool-left">
         <div class="pool-bg"></div>
@@ -1298,10 +1296,7 @@ function renderTimeline(){
 }
 
 function renderBonePile(){
-  const counts={home:0,away:0};
-  state.history.forEach(h=>{if(h.verdict==='wrong'&&h.prediction)counts[h.prediction]++});
-  $('#bone-pile-left').innerHTML=Array(counts.home).fill('🦴').map(b=>'<span class="b">'+b+'</span>').join('');
-  $('#bone-pile-right').innerHTML=Array(counts.away).fill('🦴').map(b=>'<span class="b">'+b+'</span>').join('');
+  // 骨堆已移除
 }
 
 function moveOctopus(){
@@ -1335,7 +1330,7 @@ function executeVerdict(result){
   else{state.wrongCount++;state.octopusEaten++;state.octopusAlive=Math.max(0,state.octopusAlive-1);audio.scream();setTimeout(()=>audio.shoot(),350);setTimeout(()=>audio.sizzle(),700);$('#octopus').classList.add('dying');showBBQ(predict);setTimeout(()=>$('#octopus').classList.remove('dying'),3500)}
   state.currentPrediction=null;state.currentLocked=false;state.fedHome=0;state.fedAway=0;state.deadId++;
   saveState();
-  setTimeout(()=>{const next=findCurrentMatchIdx();state.currentMatchIdx=next;saveState();renderAll()},correct?2000:4500);
+  setTimeout(()=>{saveState();renderAll()},correct?2000:4500);
 }
 
 function showBBQ(predict){
@@ -1363,12 +1358,7 @@ function showKillFlash(){
 }
 
 function addBone(side){
-  const counts={home:0,away:0};
-  state.history.forEach(h=>{if(h.verdict==='wrong'&&h.prediction)counts[h.prediction]++});
-  const el=side==='home'?$('#bone-pile-left'):$('#bone-pile-right');
-  el.innerHTML=Array(counts[side]).fill('🦴').map((b,i)=>'<span class="b'+(i===counts[side]-1?' fresh':'')+'">'+b+'</span>').join('');
-  const el2=side==='home'?$('#bone-pile-right'):$('#bone-pile-left');
-  el2.innerHTML=Array(counts[side==='home'?'away':'home']).fill('🦴').join('');
+  // 骨堆已移除
 }
 
 function showResultInput(){
@@ -1460,12 +1450,6 @@ function spawnBubbles(){const tank=$('#tank');tank.querySelectorAll('.bubble').f
 
 function tick(){
   $('#clock').textContent=fmtClock(new Date());
-  const target=findCurrentMatchIdx();
-  if(target!==state.currentMatchIdx){
-    state.currentMatchIdx=target;state.fedHome=0;state.fedAway=0;
-    state.currentPrediction=null;state.currentLocked=false;
-    saveState();
-  }
   renderTop();renderStage();renderTimeline();renderBonePile();
 }
 
@@ -1497,7 +1481,7 @@ window.executeVerdict=executeVerdict;window.submitBet=submitBet;window.exportDat
 
 function init(){
   spawnBubbles();
-  state.currentMatchIdx=findCurrentMatchIdx();
+  state.currentMatchIdx=0;
   saveState();renderAll();
   setInterval(tick,1000);tick();
   setInterval(spawnBubbles,10*60*1000);
