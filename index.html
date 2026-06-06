@@ -725,11 +725,6 @@ input.pixel-input:focus{border-color:var(--gold)}
 
 <header class="top-bar">
   <div class="brand">🐙 章鱼哥的世界杯</div>
-  <div class="top-status">
-    <div class="stat"><span class="lbl">存活</span><span class="val" id="hud-octopus">× 8</span></div>
-    <div class="stat"><span class="lbl">战绩</span><span class="val" id="hud-record">0 / 0</span></div>
-    <div class="stat danger"><span class="lbl">已烤</span><span class="val" id="hud-bbq">0</span></div>
-  </div>
   <div class="clock" id="clock">--:--:--</div>
 </header>
 
@@ -1183,9 +1178,6 @@ function showOctopusReasoning(){
 
 /* ========== 渲染 ========== */
 function renderTop(){
-  $('#hud-octopus').textContent='× '+state.octopusAlive;
-  $('#hud-record').textContent=state.correctCount+' / '+(state.correctCount+state.wrongCount);
-  $('#hud-bbq').textContent=String(state.octopusEaten);
   $('#sf-acc').textContent=(state.correctCount+state.wrongCount)===0?'--%':Math.round(state.correctCount/(state.correctCount+state.wrongCount)*100)+'%';
   $('#sf-eaten').textContent=state.octopusEaten+' / '+state.octopusTotal;
   $('#nav-info').textContent=(state.currentMatchIdx+1)+' / '+SCHEDULE.length;
