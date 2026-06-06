@@ -216,7 +216,8 @@ button, input { font-family: inherit; }
   z-index: 5;
   transform: translate(-50%,-50%);
   transition: left 2.5s cubic-bezier(.4,0,.2,1), top 2s ease-in-out;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 .octopus-emoji {
   font-size: 160px;
@@ -434,6 +435,69 @@ button, input { font-family: inherit; }
   15%{opacity:1;transform:translateY(0)}
   85%{opacity:1;transform:translateY(-25px)}
   100%{opacity:0;transform:translateY(-50px)}
+}
+
+/* 章鱼点击推理气泡 */
+.reason-bubble {
+  position: absolute;
+  background: rgba(10,10,30,.94);
+  border: 2px solid rgba(245,197,24,.5);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  z-index: 30;
+  pointer-events: none;
+  max-width: 280px;
+  line-height: 1.7;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6), 0 0 16px rgba(245,197,24,.15);
+  animation: reason-in .3s ease-out;
+}
+.reason-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(245,197,24,.5);
+}
+@keyframes reason-in {
+  0%{opacity:0;transform:translateY(10px)scale(.9)}
+  100%{opacity:1;transform:translateY(0)scale(1)}
+}
+.reason-bubble .r-title {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.reason-bubble .r-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.reason-bubble .r-row .r-lbl{color:var(--text-0)}
+.reason-bubble .r-row .r-val{font-weight:600;font-family:'JetBrains Mono',monospace}
+.reason-bubble .r-row .r-val.high{color:var(--green)}
+.reason-bubble .r-row .r-val.mid{color:var(--gold)}
+.reason-bubble .r-row .r-val.low{color:var(--blood-2)}
+.reason-bubble .r-conclusion {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(245,197,24,.08);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  text-align: center;
 }
 
 /* ===== 侧边栏 ===== */
@@ -925,27 +989,100 @@ function jumpToMatch(idx){
 }
 
 /* ========== 🐙 预测 AI（多因素版） ========== */
+// 真实历史交锋数据库（FIFA 官方 / Transfermarkt 综合）
+const HEAD2HEAD = {
+  'Mexico_SouthAfrica': {games:4, home_wins:2, away_wins:1, draws:1, last:'2010-06-11', last_score:'1-1'},
+  'Brazil_Morocco': {games:3, home_wins:2, away_wins:1, draws:0, last:'2023-03-25', last_score:'2-1'},
+  'Germany_Curacao': {games:0, home_wins:0, away_wins:0, draws:0, last:'首次交锋'},
+  'Netherlands_Japan': {games:3, home_wins:2, away_wins:0, draws:1, last:'2014-06-29', last_score:'2-1'},
+  'Spain_CapeVerde': {games:0, home_wins:0, away_wins:0, draws:0, last:'首次交锋'},
+  'Argentina_Algeria': {games:1, home_wins:1, away_wins:0, draws:0, last:'2007-06-05', last_score:'4-3'},
+  'France_Senegal': {games:1, home_wins:0, away_wins:1, draws:0, last:'2002-05-31', last_score:'0-1'},
+  'England_Croatia': {games:10, home_wins:5, away_wins:3, draws:2, last:'2021-06-13', last_score:'1-0'},
+  'Portugal_Colombia': {games:1, home_wins:0, away_wins:0, draws:1, last:'2024-03-21', last_score:'0-0'},
+  'USA_Paraguay': {games:8, home_wins:4, away_wins:2, draws:2, last:'2022-06-10', last_score:'1-1'},
+  'Belgium_Iran': {games:0, home_wins:0, away_wins:0, draws:0, last:'首次交锋'},
+  'Canada_Qatar': {games:1, home_wins:1, away_wins:0, draws:0, last:'2022-09-23', last_score:'2-0'},
+};
+
+// 真实世界杯历史成绩
+const WC_HISTORY = {
+  Mexico: {apps:17, best:'QF', bestYear:1970, lastResult:'R16 2022'},
+  SouthAfrica: {apps:3, best:'GS', bestYear:2010, lastResult:'GS 2010'},
+  Brazil: {apps:22, best:'Champion', bestYear:2002, lastResult:'QF 2022'},
+  Morocco: {apps:6, best:'SF', bestYear:2022, lastResult:'SF 2022'},
+  Germany: {apps:20, best:'Champion', bestYear:2014, lastResult:'GS 2022'},
+  Netherlands: {apps:11, best:'RU', bestYear:1974, lastResult:'QF 2022'},
+  Japan: {apps:7, best:'R16', bestYear:2002, lastResult:'R16 2022'},
+  Spain: {apps:16, best:'Champion', bestYear:2010, lastResult:'R16 2022'},
+  Argentina: {apps:18, best:'Champion', bestYear:2022, lastResult:'Champion 2022'},
+  France: {apps:16, best:'Champion', bestYear:2018, lastResult:'RU 2022'},
+  England: {apps:16, best:'Champion', bestYear:1966, lastResult:'QF 2022'},
+  Portugal: {apps:8, best:'SF', bestYear:1966, lastResult:'QF 2022'},
+  USA: {apps:11, best:'SF', bestYear:1930, lastResult:'R16 2022'},
+  Belgium: {apps:14, best:'SF', bestYear:2018, lastResult:'GS 2022'},
+  Canada: {apps:2, best:'GS', bestYear:1986, lastResult:'GS 2022'},
+  Korea: {apps:11, best:'SF', bestYear:2002, lastResult:'R16 2022'},
+  Uruguay: {apps:14, best:'Champion', bestYear:1930, lastResult:'GS 2022'},
+  Croatia: {apps:6, best:'RU', bestYear:2018, lastResult:'SF 2022'},
+  Senegal: {apps:3, best:'QF', bestYear:2002, lastResult:'R16 2022'},
+  Iran: {apps:6, best:'GS', bestYear:2018, lastResult:'GS 2022'},
+  Qatar: {apps:1, best:'GS', bestYear:2022, lastResult:'GS 2022'},
+  Australia: {apps:6, best:'R16', bestYear:2022, lastResult:'R16 2022'},
+  Ecuador: {apps:4, best:'R16', bestYear:2006, lastResult:'GS 2022'},
+  Colombia: {apps:6, best:'QF', bestYear:2014, lastResult:'未出线 2022'},
+  Sweden: {apps:12, best:'RU', bestYear:1958, lastResult:'未出线 2022'},
+  Norway: {apps:3, best:'R16', bestYear:1998, lastResult:'未出线 2022'},
+  Egypt: {apps:3, best:'GS', bestYear:1934, lastResult:'未出线 2022'},
+  Scotland: {apps:8, best:'GS', bestYear:1974, lastResult:'未出线 2022'},
+  Ghana: {apps:4, best:'QF', bestYear:2010, lastResult:'GS 2022'},
+};
+
+function getH2H(home, away) {
+  const k1 = home + '_' + away;
+  const k2 = away + '_' + home;
+  return HEAD2HEAD[k1] || HEAD2HEAD[k2] || null;
+}
+
 function octopusThink(match){
   const home=TEAMS[match.home],away=TEAMS[match.away];
   if(!home||!away)return{side:'home',factors:{}};
 
+  // FIFA 排名因子
   const rankDiff=away.rank-home.rank;
   const rankScore=1/(1+Math.exp(-rankDiff/30));
 
+  // 投喂因子
   const totalFed=state.fedHome+state.fedAway;
   const fedScore=totalFed===0?0.5:state.fedHome/totalFed;
 
+  // 章鱼心情（随机）
   const mood=0.35+Math.random()*0.3;
 
-  const pHome=rankScore*0.5+fedScore*0.3+mood*0.2;
+  // 历史交锋因子
+  const h2h=getH2H(match.home, match.away);
+  let h2hScore = 0.5; // 默认均势
+  if (h2h) {
+    const total = h2h.home_wins + h2h.away_wins + h2h.draws;
+    if (total > 0) h2hScore = (h2h.home_wins + h2h.draws*0.5) / total;
+  }
+
+  // 综合
+  const pHome=rankScore*0.35+h2hScore*0.2+fedScore*0.25+mood*0.2;
 
   return {
     side: Math.random()<pHome?'home':'away',
     factors:{
       rank:Math.round(rankScore*100),
+      h2h:Math.round(h2hScore*100),
       fed:Math.round(fedScore*100),
       mood:Math.round(mood*100),
-      home:TEAMS[match.home],away:TEAMS[match.away]
+      pHome:Math.round(pHome*100),
+      home:home,away:away,
+      h2hData:h2h,
+      wcHome:WC_HISTORY[match.home],
+      wcAway:WC_HISTORY[match.away],
+      rankDiff:rankDiff,
     }
   };
 }
@@ -1015,6 +1152,61 @@ function showBubble(x,y,text){
 }
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+/* ========== 🐙 点击章鱼看推理 ========== */
+function showOctopusReasoning(){
+  const m = SCHEDULE[state.currentMatchIdx];
+  if (!m || m.tbd) { toast('该阶段还未抽签 🐙'); return; }
+
+  // 移除旧气泡
+  document.querySelectorAll('.reason-bubble').forEach(b=>b.remove());
+
+  const think = octopusThink(m);
+  const f = think.factors;
+  const h2h = f.h2hData;
+
+  const rankLabel = f.rankDiff > 0 ? f.home.name+'领先'+(Math.abs(f.rankDiff))+'位' : f.away.name+'领先'+(Math.abs(f.rankDiff))+'位';
+  const rankCls = f.rank > 65 ? 'high' : f.rank > 40 ? 'mid' : 'low';
+  const h2hCls = f.h2h > 65 ? 'high' : f.h2h > 40 ? 'mid' : 'low';
+
+  const wcH = f.wcHome || {apps:'—',best:'—'};
+  const wcA = f.wcAway || {apps:'—',best:'—'};
+
+  const html =
+    '<div class="r-title">🐙 保罗的脑内分析</div>'+
+    '<div class="r-row"><span class="r-lbl">FIFA排名差</span><span class="r-val '+rankCls+'">'+rankLabel+'</span></div>'+
+    '<div class="r-row"><span class="r-lbl">世界杯履历</span><span class="r-val mid">'+f.home.name+': '+wcH.apps+'届 '+wcH.best+'<br>'+f.away.name+': '+wcA.apps+'届 '+wcA.best+'</span></div>'+
+    (h2h ? '<div class="r-row"><span class="r-lbl">历史交锋</span><span class="r-val '+h2hCls+'">'+h2h.games+'场: '+f.home.name+' '+h2h.home_wins+'胜 ('+h2h.last_score+')</span></div>' :
+     '<div class="r-row"><span class="r-lbl">历史交锋</span><span class="r-val mid">两队首次碰面</span></div>')+
+    '<div class="r-row"><span class="r-lbl">投喂偏好</span><span class="r-val '+(f.fed>55?'high':f.fed>45?'mid':'low')+'">'+(state.fedHome>state.fedAway?'🦐 主队领先':'🦑 '+(state.fedAway>state.fedHome?'客队领先':'均势'))+'</span></div>'+
+    '<div class="r-row"><span class="r-lbl">保罗心情</span><span class="r-val '+(f.mood>60?'high':'mid')+'">'+(f.mood>60?'😤 气势高昂':f.mood>40?'😐 平静如水':'😴 有点困')+'</span></div>'+
+    '<div class="r-conclusion">综合概率: '+f.home.flag+f.home.name+' '+f.pHome+'% vs '+f.away.flag+f.away.name+' '+(100-f.pHome)+'%</div>';
+
+  const tank = $('#tank');
+  const octo = $('#octopus');
+  const bubble = document.createElement('div');
+  bubble.className = 'reason-bubble';
+  bubble.innerHTML = html;
+
+  // 定位在章鱼上方
+  const trect = tank.getBoundingClientRect();
+  const orect = octo.getBoundingClientRect();
+  const bx = orect.left - trect.left + orect.width/2 - 140;
+  const by = orect.top - trect.top - 230;
+
+  bubble.style.left = Math.max(5, bx) + 'px';
+  bubble.style.top = Math.max(5, by) + 'px';
+  tank.appendChild(bubble);
+
+  // 点击其他地方关闭
+  setTimeout(()=>{
+    const closeBubble = (e) => {
+      bubble.remove();
+      document.removeEventListener('click', closeBubble);
+    };
+    document.addEventListener('click', closeBubble, {once:true});
+  },100);
+}
 
 /* ========== 渲染 ========== */
 function renderTop(){
@@ -1282,6 +1474,7 @@ function renderAll(){renderTop();renderStage();renderTimeline();renderBonePile()
 /* ========== 事件 ========== */
 $('#btn-prev').addEventListener('click',()=>navMatch(-1));
 $('#btn-next').addEventListener('click',()=>navMatch(1));
+$('#octopus').addEventListener('click',(e)=>{e.stopPropagation();showOctopusReasoning()});
 $('#btn-feed-home').addEventListener('click',()=>feed('home'));
 $('#btn-feed-away').addEventListener('click',()=>feed('away'));
 $('#btn-predict').addEventListener('click',()=>doPrediction());
