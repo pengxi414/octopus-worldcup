@@ -1291,9 +1291,8 @@ function moveOctopus(){
   const tw=tank.clientWidth,th=tank.clientHeight;
   const phase=getPhase(SCHEDULE[state.currentMatchIdx]),pred=state.currentPrediction;
   let tx=tw*.5,ty=th*.5;
-  if(pred==='home'){tx=tw*.15;ty=th*.52}
-  else if(pred==='away'){tx=tw*.85;ty=th*.52}
-  else if(phase==='pre'){tx=tw*(.3+Math.random()*.4);ty=th*(.4+Math.random()*.3)}
+  if(pred==='home'){tx=tw*.12;ty=th*.50}
+  else if(pred==='away'){tx=tw*.88;ty=th*.50}
   octo.style.left=tx+'px';octo.style.top=ty+'px';
 }
 
