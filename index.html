@@ -719,6 +719,218 @@ input.pixel-input:focus{border-color:var(--gold)}
 .bone-pile .b{opacity:.5}
 .bone-pile .b.fresh{opacity:1;color:var(--blood-2);animation:bpop .3s steps(2) 3}
 @keyframes bpop{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+
+/* ========== 📺 复古电视机壳子 ========== */
+.crt-tv{
+  position:relative;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.55)) drop-shadow(0 6px 12px rgba(0,0,0,.4));
+}
+
+/* 两根天线 */
+.crt-antennas{
+  position:relative;
+  height:34px;
+  margin-bottom:-6px;
+  z-index:2;
+}
+.crt-antennas .ant{
+  position:absolute;
+  top:0;
+  width:3px;
+  height:42px;
+  background:linear-gradient(to bottom, transparent 0%, #3a2820 18%, #1a1310 100%);
+  border-radius:2px;
+  transform-origin:bottom center;
+  box-shadow:1px 0 0 #000 inset, -1px 0 0 rgba(255,255,255,.06) inset;
+}
+.crt-antennas .ant:nth-child(1){left:32%;transform:rotate(-22deg)}
+.crt-antennas .ant:nth-child(2){right:32%;transform:rotate(22deg)}
+.crt-antennas .ant::after{
+  content:'';
+  position:absolute;
+  top:-4px; left:-3px;
+  width:9px; height:9px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #c9b89a, #5a4530 70%, #1a1310);
+  box-shadow:0 1px 2px rgba(0,0,0,.6);
+}
+
+/* 电视柜（木壳） */
+.crt-cabinet{
+  position:relative;
+  background:
+    linear-gradient(180deg, #5a3a26 0%, #4a2f1f 50%, #3a2415 100%),
+    repeating-linear-gradient(90deg, transparent 0 8px, rgba(0,0,0,.05) 8px 9px);
+  border-radius:22px;
+  padding:18px 18px 14px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,200,140,.12),
+    inset 0 -3px 0 rgba(0,0,0,.4),
+    0 0 0 2px #1a0f08;
+}
+.crt-cabinet::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0 2px,
+    rgba(0,0,0,.06) 2px 3px
+  );
+  pointer-events:none;
+}
+
+/* CRT 屏幕外框（黑色硬塑料 + 内陷） */
+.crt-frame{
+  position:relative;
+  background:linear-gradient(180deg, #1c1c1e, #0a0a0b);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:
+    inset 0 0 0 2px #000,
+    inset 0 4px 6px rgba(0,0,0,.8),
+    inset 0 -2px 4px rgba(255,255,255,.05);
+}
+
+/* 屏幕本体 */
+.crt-screen{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  border-radius:6px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:
+    inset 0 0 0 2px rgba(80,80,80,.5),
+    inset 0 0 30px rgba(0,0,0,.9),
+    0 0 12px rgba(100,180,255,.06);
+}
+
+/* 屏幕内容（游戏画面） */
+.crt-content{
+  position:absolute;
+  inset:0;
+}
+.crt-content .tank{
+  position:absolute;
+  inset:0;
+  /* 内部已设 width/height 100%，这里覆盖一下 */
+  width:100% !important;
+  height:100% !important;
+  border-radius:0;
+}
+
+/* 扫描线 */
+.crt-scanlines{
+  position:absolute; inset:0;
+  pointer-events:none;
+  z-index:3;
+  background:repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,.22) 0px,
+    rgba(0,0,0,.22) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode:multiply;
+}
+
+/* 雪花噪点（CSS 动画 + SVG 滤镜） */
+.crt-snow{
+  position:absolute; inset:0;
+  pointer-events:none;
+  z-index:4;
+  opacity:.18;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size:120px 120px;
+  animation:crtSnow .25s steps(4) infinite;
+}
+@keyframes crtSnow{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(-3px,2px)}
+  50%{transform:translate(2px,-3px)}
+  75%{transform:translate(-2px,-2px)}
+  100%{transform:translate(0,0)}
+}
+
+/* 屏边暗角（玻璃球面感） */
+.crt-vignette{
+  position:absolute; inset:0;
+  pointer-events:none;
+  z-index:5;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.08), transparent 60%);
+}
+
+/* 屏幕玻璃反光 */
+.crt-screen::after{
+  content:'';
+  position:absolute;
+  top:-15%; left:-10%;
+  width:55%; height:30%;
+  background:linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 60%);
+  border-radius:50%;
+  z-index:6;
+  pointer-events:none;
+  filter:blur(4px);
+}
+
+/* 底部操作区 */
+.crt-base{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:12px;
+  padding:8px 12px;
+  background:linear-gradient(180deg, #2a1a10, #1a100a);
+  border-radius:8px;
+  box-shadow:inset 0 1px 0 rgba(255,200,140,.1), inset 0 -2px 4px rgba(0,0,0,.5);
+}
+/* 扬声器（点阵网格） */
+.crt-speaker{
+  flex:1;
+  height:30px;
+  background:
+    radial-gradient(circle at center, #0a0604 35%, transparent 36%) 0 0/6px 6px,
+    linear-gradient(180deg, #1a0e08, #0a0604);
+  border-radius:4px;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.9);
+  opacity:.85;
+}
+/* 旋钮 */
+.crt-knobs{display:flex; gap:8px}
+.knob{
+  width:26px; height:26px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, #c9b89a 0%, #8a7558 40%, #3a2a18 90%);
+  position:relative;
+  box-shadow:0 2px 3px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,.2);
+}
+.knob i{
+  position:absolute;
+  top:3px; left:50%;
+  width:2px; height:8px;
+  background:#1a100a;
+  transform:translateX(-50%);
+  border-radius:1px;
+}
+.knob:nth-child(2) i{transform:translateX(-50%) rotate(60deg); transform-origin:50% 10px}
+/* 电源指示灯 */
+.crt-led{
+  width:8px; height:8px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #ff6, #f80 50%, #a40 100%);
+  box-shadow:0 0 6px rgba(255,160,40,.9), 0 0 12px rgba(255,120,20,.5);
+  animation:crtLed 3s ease-in-out infinite;
+}
+@keyframes crtLed{0%,100%{opacity:.7}50%{opacity:1}}
 </style>
 </head>
 <body>
@@ -730,37 +942,61 @@ input.pixel-input:focus{border-color:var(--gold)}
 
 <div class="main">
   <section class="stage">
-    <div class="tank" id="tank">
-      <div class="sand"></div>
-      <div class="seaweed" style="left:8%;height:50px"></div>
-      <div class="seaweed" style="left:20%;height:70px;animation-delay:.5s"></div>
-      <div class="seaweed" style="right:20%;height:55px;animation-delay:.3s"></div>
-      <div class="seaweed" style="right:8%;height:75px;animation-delay:.8s"></div>
-
-      <div class="pool left" id="pool-left">
-        <div class="pool-bg"></div>
-        <div class="flag" id="flag-left">🇲🇽</div>
-        <div class="pool-name" id="name-left">墨西哥</div>
-        <div class="pool-rank" id="rank-left">FIFA #15 · A组</div>
+    <div class="crt-tv">
+      <div class="crt-antennas">
+        <span class="ant"></span><span class="ant"></span>
       </div>
-      <div class="pool right" id="pool-right">
-        <div class="pool-bg"></div>
-        <div class="flag" id="flag-right">🇿🇦</div>
-        <div class="pool-name" id="name-right">南非</div>
-        <div class="pool-rank" id="rank-right">FIFA #61 · A组</div>
-      </div>
+      <div class="crt-cabinet">
+        <div class="crt-frame">
+          <div class="crt-screen">
+            <div class="crt-scanlines"></div>
+            <div class="crt-snow"></div>
+            <div class="crt-vignette"></div>
+            <div class="crt-content">
+              <div class="tank" id="tank">
+                <div class="sand"></div>
+                <div class="seaweed" style="left:8%;height:50px"></div>
+                <div class="seaweed" style="left:20%;height:70px;animation-delay:.5s"></div>
+                <div class="seaweed" style="right:20%;height:55px;animation-delay:.3s"></div>
+                <div class="seaweed" style="right:8%;height:75px;animation-delay:.8s"></div>
 
-      <div class="octopus" id="octopus">
-        <div class="octopus-emoji">🐙</div>
-      </div>
+                <div class="pool left" id="pool-left">
+                  <div class="pool-bg"></div>
+                  <div class="flag" id="flag-left">🇲🇽</div>
+                  <div class="pool-name" id="name-left">墨西哥</div>
+                  <div class="pool-rank" id="rank-left">FIFA #15 · A组</div>
+                </div>
+                <div class="pool right" id="pool-right">
+                  <div class="pool-bg"></div>
+                  <div class="flag" id="flag-right">🇿🇦</div>
+                  <div class="pool-name" id="name-right">南非</div>
+                  <div class="pool-rank" id="rank-right">FIFA #61 · A组</div>
+                </div>
 
-      <div class="center-overlay">
-        <div class="match-headline" id="match-title">⚽ 揭幕战 · A组第1轮</div>
-        <div class="match-sub" id="match-sub">⏳ 距开球 — · 北京时间 6/12 03:00</div>
-      </div>
+                <div class="octopus" id="octopus">
+                  <div class="octopus-emoji">🐙</div>
+                </div>
 
-      <div class="match-vs" id="match-vs">VS</div>
-      <div class="score-overlay" id="score-display">0 - 0</div>
+                <div class="center-overlay">
+                  <div class="match-headline" id="match-title">⚽ 揭幕战 · A组第1轮</div>
+                  <div class="match-sub" id="match-sub">⏳ 距开球 — · 北京时间 6/12 03:00</div>
+                </div>
+
+                <div class="match-vs" id="match-vs">VS</div>
+                <div class="score-overlay" id="score-display">0 - 0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="crt-base">
+          <div class="crt-speaker"></div>
+          <div class="crt-knobs">
+            <div class="knob"><i></i></div>
+            <div class="knob"><i></i></div>
+          </div>
+          <div class="crt-led"></div>
+        </div>
+      </div>
     </div>
   </section>
 
