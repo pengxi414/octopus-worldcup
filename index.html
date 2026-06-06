@@ -774,10 +774,6 @@ input.pixel-input:focus{border-color:var(--gold)}
         <span class="nav-info" id="nav-info">1 / 104</span>
         <button class="btn nav-btn" id="btn-next" title="下一场">▶</button>
       </div>
-      <button class="btn feed-home" id="btn-feed-home"><span class="ico">🦐</span>投喂主队</button>
-      <button class="btn feed-away" id="btn-feed-away"><span class="ico">🦑</span>投喂客队</button>
-      <button class="btn predict" id="btn-predict"><span class="ico">🔮</span>保罗预测</button>
-      <button class="btn bet" id="btn-bet"><span class="ico">🎰</span>观众竞猜</button>
       <button class="btn log" id="btn-log"><span class="ico">📜</span>战报</button>
     </div>
   </section>
@@ -819,9 +815,9 @@ input.pixel-input:focus{border-color:var(--gold)}
 const STORAGE_KEY = 'octopus-worldcup-v2';
 const defaultState = {
   octopusTotal: 8, octopusAlive: 8, octopusEaten: 0,
-  correctCount: 0, wrongCount: 0, history: [], bets: [],
+  correctCount: 0, wrongCount: 0, history: [],
   currentMatchIdx: 0, currentPrediction: null, currentLocked: false,
-  currentResult: null, fedHome: 0, fedAway: 0, deadId: 0, graves: [],
+  currentResult: null, deadId: 0, graves: [],
 };
 
 const TEAMS = {
@@ -975,9 +971,9 @@ function jumpToMatch(idx){
   state.currentMatchIdx=idx;
   state.currentPrediction=null;
   state.currentLocked=false;
-  state.fedHome=0;state.fedAway=0;
   saveState();renderAll();
   toast('切换至 '+SCHEDULE[idx].stage+' · '+SCHEDULE[idx].date.slice(5));
+  autoPredict();
 }
 
 /* ========== 🐙 预测 AI（多因素版） ========== */
@@ -1044,10 +1040,6 @@ function octopusThink(match){
   const rankDiff=away.rank-home.rank;
   const rankScore=1/(1+Math.exp(-rankDiff/30));
 
-  // 投喂因子
-  const totalFed=state.fedHome+state.fedAway;
-  const fedScore=totalFed===0?0.5:state.fedHome/totalFed;
-
   // 章鱼心情（随机）
   const mood=0.35+Math.random()*0.3;
 
@@ -1059,15 +1051,14 @@ function octopusThink(match){
     if (total > 0) h2hScore = (h2h.home_wins + h2h.draws*0.5) / total;
   }
 
-  // 综合
-  const pHome=rankScore*0.35+h2hScore*0.2+fedScore*0.25+mood*0.2;
+  // 综合（去掉投喂因子，权重重新分配：FIFA排名 + 历史交锋 + 心情）
+  const pHome=rankScore*0.45+h2hScore*0.3+mood*0.25;
 
   return {
     side: Math.random()<pHome?'home':'away',
     factors:{
       rank:Math.round(rankScore*100),
       h2h:Math.round(h2hScore*100),
-      fed:Math.round(fedScore*100),
       mood:Math.round(mood*100),
       pHome:Math.round(pHome*100),
       home:home,away:away,
@@ -1079,17 +1070,13 @@ function octopusThink(match){
   };
 }
 
-async function doPrediction(){
+// 章鱼自动选边（切到新比赛时触发）
+async function autoPredict(){
   const m=SCHEDULE[state.currentMatchIdx];
   if(!m||m.tbd)return;
-  if(state.currentLocked){toast('保罗已经做过选择了！');return}
-
+  if(state.currentLocked)return;
   const phase=getPhase(m);
-  if(phase==='finished'){toast('比赛已揭晓，等新比赛吧');return}
-
-  const btn=$('#btn-predict');
-  btn.disabled=true;
-  btn.innerHTML='<span class="ico">🐙</span>保罗思考中...';
+  if(phase==='finished')return;
 
   const tank=$('#tank');
   const octo=$('#octopus');
@@ -1106,8 +1093,6 @@ async function doPrediction(){
   // 吐出思考泡泡
   showBubble(tw*.48,th*.32,'🤔 FIFA差值: '+(f.away.rank-f.home.rank));
   await sleep(800);
-  showBubble(tw*.48,th*.32,'🦐 投喂倾向: '+(state.fedHome>state.fedAway?f.home.name+'领先':'均势'));
-  await sleep(800);
   showBubble(tw*.48,th*.32,'🎲 保罗心情: '+(f.mood>60?'超好':f.mood>40?'还行':'一般'));
   await sleep(1000);
 
@@ -1122,9 +1107,6 @@ async function doPrediction(){
   state.currentLocked=true;
   audio.beep();
   saveState();
-
-  btn.innerHTML='<span class="ico">🔮</span>保罗预测';
-  btn.disabled=false;
 
   const chosen=think.side==='home'?f.home:f.away;
   toast('🐙 保罗选择了 '+chosen.flag+' '+chosen.name+'！');
@@ -1170,8 +1152,7 @@ function showOctopusReasoning(){
     '<div class="r-row"><span class="r-lbl">世界杯履历</span><span class="r-val mid">'+f.home.name+': '+wcH.apps+'届 '+wcH.best+'<br>'+f.away.name+': '+wcA.apps+'届 '+wcA.best+'</span></div>'+
     (h2h ? '<div class="r-row"><span class="r-lbl">历史交锋</span><span class="r-val '+h2hCls+'">'+h2h.games+'场: '+f.home.name+' '+h2h.home_wins+'胜 ('+h2h.last_score+')</span></div>' :
      '<div class="r-row"><span class="r-lbl">历史交锋</span><span class="r-val mid">两队首次碰面</span></div>')+
-    '<div class="r-row"><span class="r-lbl">投喂偏好</span><span class="r-val '+(f.fed>55?'high':f.fed>45?'mid':'low')+'">'+(state.fedHome>state.fedAway?'🦐 主队领先':'🦑 '+(state.fedAway>state.fedHome?'客队领先':'均势'))+'</span></div>'+
-    '<div class="r-row"><span class="r-lbl">保罗心情</span><span class="r-val '+(f.mood>60?'high':'mid')+'">'+(f.mood>60?'😤 气势高昂':f.mood>40?'😐 平静如水':'😴 有点困')+'</span></div>'+
+    '<div class="r-row"><span class="r-lbl">保罗心情</span><span class="r-val '+(f.mood>60?'high':f.mood>40?'mid':'low')+'">'+(f.mood>60?'😤 气势高昂':f.mood>40?'😐 平静如水':'😴 有点困')+'</span></div>'+
     '<div class="r-conclusion">综合概率: '+f.home.flag+f.home.name+' '+f.pHome+'% vs '+f.away.flag+f.away.name+' '+(100-f.pHome)+'%</div>';
 
   const tank = $('#tank');
@@ -1296,17 +1277,6 @@ function moveOctopus(){
   octo.style.left=tx+'px';octo.style.top=ty+'px';
 }
 
-/* ========== 投喂 ========== */
-function feed(side){
-  if(state.currentLocked){toast('保罗已经决定了，再投也没用');return}
-  if(side==='home')state.fedHome++;else state.fedAway++;
-  moveOctopus();audio.beep();
-  const m=SCHEDULE[state.currentMatchIdx];
-  const teamName=TEAMS[side==='home'?m.home:m.away].name;
-  toast('投喂了 '+teamName+'（'+(side==='home'?state.fedHome:state.fedAway)+' 次）');
-  saveState();
-}
-
 /* ========== 行刑 ========== */
 function executeVerdict(result){
   const idx=state.currentMatchIdx,m=SCHEDULE[idx];if(!m)return;
@@ -1314,7 +1284,7 @@ function executeVerdict(result){
   state.history.push({matchIdx:idx,match:m.home+' vs '+m.away,prediction:predict,result,verdict:correct?'correct':'wrong',time:Date.now()});
   if(correct){state.correctCount++;audio.fanfare();$('#octopus').classList.add('dying');setTimeout(()=>$('#octopus').classList.remove('dying'),1500);toast('🎉 押中了！保罗得意地吐了口墨水。')}
   else{state.wrongCount++;state.octopusEaten++;state.octopusAlive=Math.max(0,state.octopusAlive-1);audio.scream();setTimeout(()=>audio.shoot(),350);setTimeout(()=>audio.sizzle(),700);$('#octopus').classList.add('dying');showBBQ(predict);setTimeout(()=>$('#octopus').classList.remove('dying'),3500)}
-  state.currentPrediction=null;state.currentLocked=false;state.fedHome=0;state.fedAway=0;state.deadId++;
+  state.currentPrediction=null;state.currentLocked=false;state.deadId++;
   saveState();
   setTimeout(()=>{saveState();renderAll()},correct?2000:4500);
 }
@@ -1377,43 +1347,6 @@ function showReport(){
   openModal('📜 战报历史',body);
 }
 
-const ODDS=[100,50,20,10,5,3,2,1.5,1.2];
-function showBetting(){
-  const body='<p style="color:var(--text-0);font-size:12px;line-height:1.8;margin-bottom:10px">押注：本届世界杯结束前，一共能吃几只 🐙？</p>'+renderOddsTable()+
-    '<div style="display:flex;gap:8px;align-items:center;margin-top:10px"><input class="pixel-input" id="bet-name" placeholder="你的名号" maxlength="12" style="flex:1"><input class="pixel-input" id="bet-guess" type="number" min="0" max="8" placeholder="几只" style="width:80px"></div>'+
-    '<div class="btn-row"><button class="btn bet" onclick="submitBet()">🎰 下 注</button><button class="btn" onclick="closeModal()">取消</button></div><div id="bet-list" style="margin-top:14px"></div>';
-  openModal('🎰 观众竞猜',body);renderBetList();
-}
-function renderOddsTable(){
-  const totals=[0,0,0,0,0,0,0,0,0];state.bets.forEach(b=>{if(b.guess>=0&&b.guess<=8)totals[b.guess]++});
-  const eaten=state.octopusEaten,alive=state.octopusAlive;
-  return'<div style="display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:10px 0">'+ODDS.map((base,i)=>{
-    let cls='',oo=base+'x';
-    if(i<=eaten){cls='loser';oo='✕'}else if(i===eaten+1){cls='edge';oo=(base*.5).toFixed(2)+'x'}else{const f=Math.max(.5,1-alive/state.octopusTotal);oo=Math.max(1.05,base*f).toFixed(2)+'x'}
-    const bg=cls==='loser'?'background:var(--bg-0);opacity:.35;color:var(--text-0)':cls==='edge'?'background:var(--bg-0);border:2px solid var(--gold)':'background:var(--bg-0);border:2px solid rgba(255,255,255,.08)';
-    return'<div style="'+bg+';padding:6px 2px;text-align:center;border-radius:6px"><div style="color:var(--text-0);font-size:10px">押'+i+'只</div><div style="color:'+(cls==='loser'?'var(--text-0)':'var(--gold)')+';font-size:12px;font-weight:700;margin:2px 0;font-family:JetBrains Mono,monospace">'+oo+'</div><div style="color:var(--water-3);font-size:10px">👥'+totals[i]+'</div></div>'
-  }).join('')+'</div><p style="text-align:center;color:var(--text-0);font-size:11px;margin-top:6px">当前已烤 <span style="color:var(--blood-2);font-weight:700">'+eaten+'</span> 只</p>';
-}
-function submitBet(){
-  const name=$('#bet-name').value.trim()||'匿名看客',guess=parseInt($('#bet-guess').value);
-  if(isNaN(guess)||guess<0||guess>8){toast('请输入 0-8 之间的数字');return}
-  state.bets.push({name,guess,time:Date.now()});saveState();
-  $('#bet-name').value='';$('#bet-guess').value='';audio.beep();
-  toast('已下注：'+name+' 猜吃 '+guess+' 只');showBetting();
-}
-function renderBetList(){
-  const el=$('#bet-list');if(el)el.innerHTML=renderBetListHtml();
-}
-function renderBetListHtml(){
-  if(state.bets.length===0)return'<p style="color:var(--text-0);font-size:12px;text-align:center;padding:20px">还没人下注，来当第一个预言家。</p>';
-  const sorted=[...state.bets].sort((a,b)=>a.guess-b.guess);
-  return'<p style="color:var(--gold);font-size:13px;font-weight:700;margin:12px 0 6px">👥 下注榜（'+state.bets.length+' 人）</p><div style="max-height:200px;overflow-y:auto">'+sorted.map(b=>{
-    const cls=b.guess<state.octopusEaten?'loser':b.guess===state.octopusEaten?'edge':'';
-    const style=cls==='loser'?'opacity:.4':cls==='edge'?'color:var(--green)':'';
-    return'<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg-0);border-radius:6px;margin-bottom:4px;'+style+'"><span style="font-size:13px">'+b.name+'</span><span style="color:var(--gold);font-size:14px;font-weight:700;font-family:JetBrains Mono,monospace">'+b.guess+' 只</span></div>'
-  }).join('')+'</div>';
-}
-
 function openModal(t,b){$('#modal-title').textContent=t;$('#modal-body').innerHTML=b;$('#modal').classList.add('show')}
 function closeModal(){$('#modal').classList.remove('show')}
 let toastTimer=null;
@@ -1445,10 +1378,6 @@ function renderAll(){renderTop();renderStage();renderTimeline();renderBonePile()
 $('#btn-prev').addEventListener('click',()=>navMatch(-1));
 $('#btn-next').addEventListener('click',()=>navMatch(1));
 $('#octopus').addEventListener('click',(e)=>{e.stopPropagation();showOctopusReasoning()});
-$('#btn-feed-home').addEventListener('click',()=>feed('home'));
-$('#btn-feed-away').addEventListener('click',()=>feed('away'));
-$('#btn-predict').addEventListener('click',()=>doPrediction());
-$('#btn-bet').addEventListener('click',showBetting);
 $('#btn-log').addEventListener('click',showReport);
 $('#modal-close').addEventListener('click',closeModal);
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()});
@@ -1456,14 +1385,10 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeModal();
   if(e.key==='ArrowLeft'){e.preventDefault();navMatch(-1)}
   if(e.key==='ArrowRight'){e.preventDefault();navMatch(1)}
-  if(e.key==='1')feed('home');
-  if(e.key==='2')feed('away');
-  if(e.key==='p'||e.key==='P'){e.preventDefault();doPrediction()}
-  if(e.key==='b'||e.key==='B')showBetting();
   if(e.key==='l'||e.key==='L')showReport();
   if(e.key===' '){e.preventDefault();showResultInput()}
 });
-window.executeVerdict=executeVerdict;window.submitBet=submitBet;window.exportData=exportData;window.resetGame=resetGame;window.closeModal=closeModal;
+window.executeVerdict=executeVerdict;window.exportData=exportData;window.resetGame=resetGame;window.closeModal=closeModal;
 
 function init(){
   spawnBubbles();
@@ -1472,6 +1397,7 @@ function init(){
   setInterval(tick,1000);tick();
   setInterval(spawnBubbles,10*60*1000);
   document.addEventListener('click',()=>getCtx(),{once:true});
+  autoPredict();
 }
 init();
 </script>
