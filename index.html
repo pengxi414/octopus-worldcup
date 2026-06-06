@@ -762,15 +762,6 @@ input.pixel-input:focus{border-color:var(--gold)}
       <div class="match-vs" id="match-vs">VS</div>
       <div class="score-overlay" id="score-display">0 - 0</div>
     </div>
-
-    <div class="action-bar">
-      <div class="nav-group">
-        <button class="btn nav-btn" id="btn-prev" title="上一场">◀</button>
-        <span class="nav-info" id="nav-info">1 / 104</span>
-        <button class="btn nav-btn" id="btn-next" title="下一场">▶</button>
-      </div>
-      <button class="btn log" id="btn-log"><span class="ico">📜</span>战报</button>
-    </div>
   </section>
 
   <aside class="sidebar">
@@ -1180,7 +1171,6 @@ function showOctopusReasoning(){
 function renderTop(){
   $('#sf-acc').textContent=(state.correctCount+state.wrongCount)===0?'--%':Math.round(state.correctCount/(state.correctCount+state.wrongCount)*100)+'%';
   $('#sf-eaten').textContent=state.octopusEaten+' / '+state.octopusTotal;
-  $('#nav-info').textContent=(state.currentMatchIdx+1)+' / '+SCHEDULE.length;
 }
 
 function renderStage(){
@@ -1367,17 +1357,13 @@ function tick(){
 function renderAll(){renderTop();renderStage();renderTimeline();renderBonePile()}
 
 /* ========== 事件 ========== */
-$('#btn-prev').addEventListener('click',()=>navMatch(-1));
-$('#btn-next').addEventListener('click',()=>navMatch(1));
 $('#octopus').addEventListener('click',(e)=>{e.stopPropagation();showOctopusReasoning()});
-$('#btn-log').addEventListener('click',showReport);
 $('#modal-close').addEventListener('click',closeModal);
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeModal();
   if(e.key==='ArrowLeft'){e.preventDefault();navMatch(-1)}
   if(e.key==='ArrowRight'){e.preventDefault();navMatch(1)}
-  if(e.key==='l'||e.key==='L')showReport();
   if(e.key===' '){e.preventDefault();showResultInput()}
 });
 window.executeVerdict=executeVerdict;window.exportData=exportData;window.resetGame=resetGame;window.closeModal=closeModal;
