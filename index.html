@@ -6,105 +6,97 @@
 <title>章鱼哥的世界杯 · 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-0: #0a0a14;
-  --bg-1: #15152a;
-  --bg-2: #1f1f3a;
-  --water-0: #0a3d62;
-  --water-1: #1e5f8a;
-  --water-2: #3a8cb8;
-  --water-3: #6cb4d4;
-  --pixel-0: #585858;
-  --pixel-1: #a4a4a4;
-  --pixel-2: #c0cbdc;
-  --pixel-3: #f4f4f4;
-  --blood: #b02a2a;
-  --blood-2: #ff3a3a;
-  --gold: #fbd000;
-  --green: #00a651;
-  --fire-0: #ff3a1a;
-  --fire-1: #ff8a1a;
-  --fire-2: #ffd84a;
-  --shadow: rgba(0, 0, 0, 0.6);
+  --bg-0: #080810;
+  --bg-1: #121224;
+  --bg-2: #1a1a36;
+  --water-0: #0a3050;
+  --water-1: #154878;
+  --water-2: #2a70a8;
+  --water-3: #5a9ec8;
+  --text-0: #8892a8;
+  --text-1: #c0c8d8;
+  --text-2: #f0f2f8;
+  --blood: #c0392b;
+  --blood-2: #e74c3c;
+  --gold: #f5c518;
+  --green: #27ae60;
+  --fire-0: #e85d3a;
+  --fire-1: #f08a5d;
+  --fire-2: #f9d56e;
+  --radius: 6px;
+  --shadow: 0 2px 12px rgba(0,0,0,.4);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
   background: var(--bg-0);
-  color: var(--pixel-3);
-  font-family: 'Press Start 2P', 'VT323', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-size: 12px;
-  line-height: 1.5;
+  color: var(--text-2);
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
   overflow: hidden;
-  image-rendering: pixelated;
-  text-rendering: optimizeLegibility;
   user-select: none;
 }
-
-button, input { font-family: inherit; image-rendering: pixelated; }
+button, input { font-family: inherit; }
 
 .main {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 340px;
   height: 100vh;
 }
 
-/* ===== 顶部栏 ===== */
+/* ===== 顶栏 ===== */
 .top-bar {
   grid-column: 1 / -1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
-  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
-  border-bottom: 4px solid var(--pixel-0);
-  box-shadow: 0 4px 0 var(--shadow);
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--bg-1);
+  border-bottom: 2px solid rgba(255,255,255,.08);
   z-index: 10;
+  gap: 16px;
 }
-
 .brand {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 800;
   color: var(--gold);
-  text-shadow: 2px 2px 0 var(--blood);
-  letter-spacing: 1px;
-  font-weight: bold;
+  letter-spacing: -.3px;
+  white-space: nowrap;
 }
-
 .top-status {
   display: flex;
-  gap: 12px;
+  gap: 16px;
 }
-
 .stat {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
-  padding: 8px 14px;
-  background: var(--bg-0);
-  border: 2px solid var(--pixel-0);
-  box-shadow: inset 0 0 0 2px var(--bg-0), inset 0 0 0 4px var(--pixel-1);
-  font-size: 10px;
+  padding: 6px 14px;
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
 }
-
-.stat .lbl { color: var(--pixel-2); }
-.stat .val { color: var(--gold); font-size: 13px; font-weight: bold; }
+.stat .lbl { color: var(--text-0); }
+.stat .val { color: var(--gold); font-size: 16px; font-weight: 700; }
 .stat.danger .val { color: var(--blood-2); }
 .stat .val.ok { color: var(--green); }
 
 .clock {
-  font-family: 'VT323', monospace;
-  font-size: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
   color: var(--water-3);
-  text-shadow: 0 0 6px var(--water-2);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
-/* ===== 鱼缸 ===== */
+/* ===== 主舞台 ===== */
 .stage {
-  position: relative;
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -116,58 +108,35 @@ button, input { font-family: inherit; image-rendering: pixelated; }
   flex: 1;
   position: relative;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(108, 180, 212, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 10%, rgba(90,158,200,.15) 0%, transparent 50%),
     linear-gradient(180deg, var(--water-1) 0%, var(--water-0) 100%);
-  border: 6px solid var(--pixel-2);
-  box-shadow:
-    inset 0 0 0 4px var(--pixel-0),
-    inset 0 0 0 6px var(--pixel-2),
-    inset 0 0 40px rgba(0, 0, 0, 0.5),
-    0 0 0 4px var(--bg-0),
-    0 0 0 8px var(--pixel-0);
+  border: 3px solid rgba(255,255,255,.12);
+  border-radius: 10px;
   overflow: hidden;
   min-height: 0;
-}
-
-.tank::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 12px;
-  background: repeating-linear-gradient(90deg, var(--water-3) 0 6px, transparent 6px 12px);
-  z-index: 4;
-  opacity: 0.6;
-  animation: shimmer 4s linear infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-12px); }
 }
 
 .sand {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 36px;
-  background: repeating-linear-gradient(90deg, #c9a066 0 4px, #a47a3a 4px 8px);
-  border-top: 4px solid var(--pixel-0);
+  height: 30px;
+  background: linear-gradient(0deg, #8a6a3a, #c4a060);
   z-index: 1;
 }
 
 .seaweed {
   position: absolute;
   bottom: 0;
-  width: 24px;
+  width: 18px;
   z-index: 1;
-  background: linear-gradient(0deg, #2a5a2a 0%, #1a3a1a 100%);
-  clip-path: polygon(50% 0, 70% 30%, 50% 60%, 80% 100%, 50% 100%, 30% 60%, 50% 30%);
-  animation: sway 3s ease-in-out infinite;
+  background: linear-gradient(0deg, #1a4a1a, #2a6a2a);
+  border-radius: 40% 40% 0 0;
+  animation: sway 4s ease-in-out infinite;
   transform-origin: bottom center;
 }
-
 @keyframes sway {
-  0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
+  0%,100%{transform:rotate(-4deg)}
+  50%{transform:rotate(4deg)}
 }
 
 .bubble {
@@ -175,751 +144,548 @@ button, input { font-family: inherit; image-rendering: pixelated; }
   bottom: 0;
   background: var(--water-3);
   border-radius: 50%;
-  opacity: 0.5;
+  opacity: .35;
   animation: rise linear infinite;
   z-index: 2;
 }
-
 @keyframes rise {
-  0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 0.5; }
-  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+  0%{transform:translateY(0)translateX(0);opacity:0}
+  10%{opacity:.35}
+  100%{transform:translateY(-120vh)translateX(15px);opacity:0}
 }
 
-/* ===== 池子 ===== */
+/* ===== 球队区 ===== */
 .pool {
   position: absolute;
-  top: 30%;
+  top: 25%;
   bottom: 0;
-  width: 35%;
+  width: 38%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   z-index: 2;
 }
-
-.pool.left { left: 0; }
-.pool.right { right: 0; }
+.pool.left{left:0}
+.pool.right{right:0}
 
 .pool-bg {
   position: absolute;
   inset: 0;
   background: var(--water-2);
-  opacity: 0.1;
+  opacity: .06;
   z-index: -1;
+  border-radius: 8px;
 }
-
-.pool.win { filter: brightness(1.4) saturate(1.5); }
-.pool.win .pool-bg { background: var(--gold); opacity: 0.35; }
-.pool.lose { filter: brightness(0.4) saturate(0.3); }
-.pool.lose .pool-bg { background: var(--blood); opacity: 0.4; }
+.pool.win .pool-bg{background:var(--gold);opacity:.12}
+.pool.lose .pool-bg{background:var(--blood);opacity:.15}
 
 .flag {
-  width: 88px;
-  height: 64px;
-  font-size: 48px;
-  border: 3px solid var(--pixel-3);
-  box-shadow: 0 0 0 2px var(--pixel-0), 4px 4px 0 var(--shadow);
+  font-size: 52px;
+  width: 80px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-1);
-  z-index: 2;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,.1);
 }
-
 .pool-name {
-  font-size: 14px;
-  color: var(--pixel-3);
-  background: var(--bg-0);
-  padding: 6px 14px;
-  border: 2px solid var(--pixel-0);
-  text-shadow: 1px 1px 0 var(--shadow), 0 0 4px rgba(0, 0, 0, 0.5);
-  z-index: 2;
-  letter-spacing: 2px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-2);
+  padding: 4px 14px;
+  background: rgba(0,0,0,.4);
+  border-radius: var(--radius);
 }
-
 .pool-rank {
-  position: absolute;
-  bottom: 50px;
-  font-size: 11px;
-  color: var(--pixel-2);
-  background: var(--bg-0);
-  padding: 4px 10px;
-  border: 1px solid var(--pixel-0);
-  z-index: 2;
-  letter-spacing: 1px;
+  font-size: 12px;
+  color: var(--text-0);
+  background: rgba(0,0,0,.3);
+  padding: 3px 10px;
+  border-radius: var(--radius);
 }
 
-/* ===== 保罗章鱼 ===== */
+/* ===== 保罗 ===== */
 .octopus {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
-  height: 200px;
   z-index: 5;
-  transform: translate(-50%, -50%);
-  transition: left 2s cubic-bezier(0.4, 0, 0.2, 1), top 2s ease-in-out;
+  transform: translate(-50%,-50%);
+  transition: left 2.5s cubic-bezier(.4,0,.2,1), top 2s ease-in-out;
   pointer-events: none;
 }
-
 .octopus-emoji {
-  font-size: 180px;
+  font-size: 160px;
   line-height: 1;
-  filter: drop-shadow(4px 6px 0 rgba(0, 0, 0, 0.5));
-  animation: swim 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.5));
+  animation: swim 3s ease-in-out infinite;
 }
-
 @keyframes swim {
-  0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
-  50%      { transform: translateY(-6px) rotate(3deg) scale(1.04); }
+  0%,100%{transform:translateY(0)rotate(-2deg)scale(1)}
+  50%{transform:translateY(-8px)rotate(2deg)scale(1.03)}
 }
 
 .octopus.dying .octopus-emoji {
-  animation: dying 0.18s steps(2) infinite;
-  filter: drop-shadow(3px 4px 0 #b02a2a) sepia(1) hue-rotate(-30deg) saturate(2) brightness(1.1);
+  animation: dying .15s steps(3) infinite;
+  filter: sepia(1) hue-rotate(-20deg) saturate(2) brightness(1.1);
 }
-
 @keyframes dying {
-  0%   { transform: translate(0, 0) rotate(0); }
-  25%  { transform: translate(-3px, 1px) rotate(-6deg); }
-  50%  { transform: translate(2px, -1px) rotate(4deg); }
-  75%  { transform: translate(-1px, 2px) rotate(-2deg); }
-  100% { transform: translate(0, 0) rotate(0); }
+  0%,100%{transform:translate(0,0)rotate(0)}
+  33%{transform:translate(-4px,2px)rotate(-8deg)}
+  66%{transform:translate(3px,-1px)rotate(6deg)}
 }
 
-/* ===== 中央 ===== */
+/* ===== 对阵信息 ===== */
 .center-overlay {
   position: absolute;
-  top: 16px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   z-index: 6;
   text-align: center;
   pointer-events: none;
 }
-
 .match-headline {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--gold);
-  background: var(--bg-0);
-  padding: 10px 20px;
-  border: 3px solid var(--gold);
-  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 4px var(--pixel-0), 4px 4px 0 var(--shadow);
-  text-shadow: 2px 2px 0 var(--blood), 0 0 6px rgba(255, 208, 0, 0.4);
-  letter-spacing: 2px;
-  font-weight: bold;
+  background: rgba(0,0,0,.7);
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(245,197,24,.3);
 }
-
 .match-sub {
   font-size: 12px;
-  color: var(--pixel-3);
-  background: var(--bg-0);
-  padding: 5px 14px;
-  border: 2px solid var(--pixel-0);
-  font-family: 'VT323', monospace;
-  letter-spacing: 1px;
+  color: var(--text-0);
+  background: rgba(0,0,0,.5);
+  padding: 4px 12px;
+  border-radius: var(--radius);
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .match-vs {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
+  transform: translate(-50%,-50%);
+  font-size: 18px;
+  font-weight: 800;
   color: var(--gold);
-  background: var(--bg-0);
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--gold);
+  background: rgba(0,0,0,.7);
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 4;
-  box-shadow: 0 0 0 3px var(--bg-0), 0 0 0 5px var(--pixel-0);
-  text-shadow: 2px 2px 0 var(--blood);
-  font-weight: bold;
+  border: 2px solid rgba(245,197,24,.4);
 }
 
 .score-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'VT323', monospace;
-  font-size: 72px;
+  transform: translate(-50%,-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 64px;
+  font-weight: 700;
   color: var(--gold);
-  background: var(--bg-0);
-  padding: 14px 30px;
-  border: 5px solid var(--gold);
+  background: rgba(0,0,0,.85);
+  padding: 12px 28px;
+  border-radius: 12px;
   z-index: 7;
   display: none;
-  text-shadow: 3px 3px 0 var(--blood), 0 0 10px rgba(255, 208, 0, 0.5);
-  letter-spacing: 6px;
-  font-weight: bold;
 }
-
-.score-overlay.show { display: block; animation: pop 0.3s steps(4) both; }
-
+.score-overlay.show{display:block;animation:pop .3s ease-out both}
 @keyframes pop {
-  0% { transform: translate(-50%, -50%) scale(0.3); }
-  100% { transform: translate(-50%, -50%) scale(1); }
+  0%{transform:translate(-50%,-50%)scale(.3);opacity:0}
+  100%{transform:translate(-50%,-50%)scale(1);opacity:1}
 }
 
 .tb-box {
   position: absolute;
-  bottom: 56px;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   z-index: 6;
 }
-
 .tb-box .box {
-  background: var(--bg-0);
-  border: 2px solid var(--pixel-0);
-  padding: 8px 14px;
+  background: rgba(0,0,0,.6);
+  border-radius: var(--radius);
+  padding: 6px 14px;
   text-align: center;
-  min-width: 110px;
+  min-width: 90px;
 }
-
-.tb-box .k { color: var(--pixel-2); font-size: 9px; }
-.tb-box .v { color: var(--gold); font-size: 16px; margin-top: 4px; font-family: 'VT323', monospace; font-weight: bold; }
-.tb-box .v.ok { color: var(--green); }
-.tb-box .v.danger { color: var(--blood-2); }
+.tb-box .k{color:var(--text-0);font-size:10px;font-weight:500}
+.tb-box .v{color:var(--gold);font-size:15px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.tb-box .v.ok{color:var(--green)}
+.tb-box .v.danger{color:var(--blood-2)}
 
 /* ===== 操作栏 ===== */
 .action-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
   background: var(--bg-1);
-  border-top: 4px solid var(--pixel-0);
+  border-radius: var(--radius);
+  flex-wrap: wrap;
 }
-
 .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   background: var(--bg-2);
-  color: var(--pixel-3);
-  border: 3px solid var(--pixel-0);
-  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 3px var(--pixel-1), 4px 4px 0 var(--shadow);
-  padding: 14px 16px;
-  font-size: 11px;
+  color: var(--text-1);
+  border: 2px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled){
+  background: var(--water-2);
+  border-color: var(--water-3);
+  color: #fff;
+}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn .ico{font-size:18px}
+
+.btn.feed-home{border-color:rgba(245,197,24,.4);color:var(--gold)}
+.btn.feed-home:hover:not(:disabled){background:rgba(245,197,24,.15)}
+.btn.feed-away{border-color:rgba(90,158,200,.4);color:var(--water-3)}
+.btn.feed-away:hover:not(:disabled){background:rgba(90,158,200,.15)}
+.btn.predict{
+  background: linear-gradient(135deg,rgba(90,158,200,.2),rgba(245,197,24,.1));
+  border-color:rgba(245,197,24,.35);
+  color:var(--gold);
+  animation: glow 2.5s ease-in-out infinite;
+}
+.btn.predict:hover:not(:disabled){background:linear-gradient(135deg,rgba(90,158,200,.35),rgba(245,197,24,.2))}
+@keyframes glow {
+  0%,100%{box-shadow:0 0 8px rgba(245,197,24,.1)}
+  50%{box-shadow:0 0 16px rgba(245,197,24,.25)}
+}
+.btn.bet{color:var(--fire-1);border-color:rgba(232,93,58,.35)}
+.btn.log{color:var(--green);border-color:rgba(39,174,96,.35)}
+
+/* 导航 */
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 4px;
+}
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: var(--radius);
+  border: 2px solid rgba(255,255,255,.15);
+  background: var(--bg-2);
+  color: var(--text-1);
+  cursor: pointer;
+}
+.nav-btn:hover{background:var(--water-2);color:#fff}
+.nav-info {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--water-3);
+  min-width: 55px;
   text-align: center;
-  letter-spacing: 1px;
-  font-weight: bold;
-  transition: transform 0.1s, box-shadow 0.1s;
+  font-family: 'JetBrains Mono', monospace;
 }
 
-.btn:hover:not(:disabled) {
-  background: var(--bg-1);
-  transform: translate(-1px, -1px);
-  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 3px var(--gold), 5px 5px 0 var(--shadow);
+/* 预测泡泡 */
+.predict-bubble {
+  position: absolute;
+  background: rgba(0,0,0,.85);
+  border: 1px solid var(--gold);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  z-index: 20;
+  pointer-events: none;
+  animation: think-float 2s ease-out forwards;
+  white-space: nowrap;
+  border-radius: 8px;
 }
-
-.btn:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 3px var(--pixel-0), 0 0 0 var(--shadow);
+@keyframes think-float {
+  0%{opacity:0;transform:translateY(10px)}
+  15%{opacity:1;transform:translateY(0)}
+  85%{opacity:1;transform:translateY(-25px)}
+  100%{opacity:0;transform:translateY(-50px)}
 }
-
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.btn .ico { font-size: 22px; display: block; margin-bottom: 4px; }
-
-.btn.feed-home { color: var(--gold); border-color: var(--gold); }
-.btn.feed-home:hover:not(:disabled) { box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 3px var(--fire-1), 5px 5px 0 var(--shadow); }
-.btn.feed-away { color: var(--water-3); border-color: var(--water-3); }
-.btn.feed-away:hover:not(:disabled) { box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 3px var(--water-3), 5px 5px 0 var(--shadow); }
-.btn.bet { color: var(--fire-1); border-color: var(--fire-1); }
-.btn.log { color: var(--green); border-color: var(--green); }
 
 /* ===== 侧边栏 ===== */
 .sidebar {
   background: var(--bg-1);
-  border-left: 4px solid var(--pixel-0);
   display: flex;
   flex-direction: column;
   min-height: 0;
+  border-left: 2px solid rgba(255,255,255,.06);
 }
-
 .sidebar-header {
   padding: 14px 16px;
   background: var(--bg-2);
-  border-bottom: 2px solid var(--pixel-0);
+  border-bottom: 2px solid rgba(255,255,255,.06);
 }
-
 .sidebar-title {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--gold);
-  text-shadow: 2px 2px 0 var(--blood);
-  letter-spacing: 1px;
 }
-
 .sidebar-sub {
-  font-size: 7px;
-  color: var(--pixel-2);
-  margin-top: 6px;
-  line-height: 1.7;
+  font-size: 11px;
+  color: var(--text-0);
+  margin-top: 4px;
+  line-height: 1.6;
 }
-
 .timeline {
   flex: 1;
   overflow-y: auto;
-  padding: 8px;
+  padding: 8px 12px;
   scrollbar-width: thin;
-  scrollbar-color: var(--pixel-0) var(--bg-0);
+  scrollbar-color: rgba(255,255,255,.1) transparent;
 }
-.timeline::-webkit-scrollbar { width: 8px; }
-.timeline::-webkit-scrollbar-track { background: var(--bg-0); }
-.timeline::-webkit-scrollbar-thumb { background: var(--pixel-0); }
+.timeline::-webkit-scrollbar{width:5px}
+.timeline::-webkit-scrollbar-track{background:transparent}
+.timeline::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
 
-.tl-day { margin-bottom: 12px; }
-
+.tl-day{margin-bottom:14px}
 .tl-day-header {
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--gold);
   padding: 6px 10px;
   background: var(--bg-2);
-  border-left: 4px solid var(--gold);
+  border-radius: var(--radius);
   margin-bottom: 6px;
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-  letter-spacing: 1px;
 }
-
-.tl-day-header .count { color: var(--pixel-2); font-size: 9px; }
-
+.tl-day-header .count{color:var(--text-0);font-size:11px;font-weight:500}
 .tl-match {
   display: grid;
-  grid-template-columns: 40px 1fr auto;
-  gap: 6px;
+  grid-template-columns: 42px 1fr auto;
+  gap: 8px;
   padding: 8px 10px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   background: var(--bg-0);
-  border: 2px solid var(--bg-2);
-  font-size: 10px;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  font-size: 12px;
   line-height: 1.5;
-  transition: background 0.2s;
+  cursor: pointer;
+  transition: all .15s;
 }
+.tl-match:hover{background:var(--bg-2);border-color:rgba(255,255,255,.08)}
+.tl-match.current{border-color:var(--gold);background:var(--bg-2);box-shadow:0 0 10px rgba(245,197,24,.15)}
+.tl-match.past{opacity:.5}
+.tl-match.past.dead{border-left:4px solid var(--blood)}
+.tl-match.past.alive{border-left:4px solid var(--green)}
 
-.tl-match:hover { background: var(--bg-2); }
-.tl-match.current { border-color: var(--gold); background: var(--bg-2); box-shadow: 0 0 8px var(--gold); }
-.tl-match.past { opacity: 0.55; }
-.tl-match.past.dead { border-left: 6px solid var(--blood); padding-left: 4px; }
-.tl-match.past.alive { border-left: 6px solid var(--green); padding-left: 4px; }
-
-.tl-time {
-  color: var(--water-3);
-  font-family: 'VT323', monospace;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-}
-
-.tl-teams {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 11px;
-}
-
-.tl-team { display: flex; gap: 5px; align-items: center; }
-.tl-team .emo { font-size: 14px; }
-.tl-team.home { color: var(--gold); }
-.tl-team.away { color: var(--water-3); }
-.tl-group {
-  color: var(--pixel-1);
-  font-size: 9px;
-  margin-top: 2px;
-  letter-spacing: 1px;
-}
-
-.tl-status {
-  font-size: 9px;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2px;
-  font-weight: bold;
-}
-
-.tl-tag {
-  padding: 2px 5px;
-  border: 1px solid currentColor;
-  white-space: nowrap;
-  font-size: 9px;
-  letter-spacing: 1px;
-}
-
-.tl-tag.live { color: var(--blood-2); animation: blink 1s steps(2) infinite; }
-.tl-tag.done { color: var(--green); }
-.tl-tag.next { color: var(--gold); }
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+.tl-time{color:var(--water-3);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500}
+.tl-teams{display:flex;flex-direction:column;gap:1px}
+.tl-team{display:flex;gap:5px;align-items:center;font-size:12px;font-weight:600}
+.tl-team .emo{font-size:14px}
+.tl-team.home{color:var(--gold)}
+.tl-team.away{color:var(--water-3)}
+.tl-group{color:var(--text-0);font-size:10px;margin-top:1px}
+.tl-status{font-size:10px;font-weight:600}
+.tl-tag{padding:1px 5px;border-radius:3px}
+.tl-tag.live{color:var(--blood-2);animation:blink 1s steps(2)infinite}
+.tl-tag.done{color:var(--green)}
+.tl-tag.next{color:var(--gold)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
 .sidebar-footer {
   padding: 12px 16px;
   background: var(--bg-2);
-  border-top: 2px solid var(--pixel-0);
+  border-top: 2px solid rgba(255,255,255,.06);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  font-size: 9px;
 }
-
-.sf-box {
-  background: var(--bg-0);
-  border: 2px solid var(--pixel-0);
-  padding: 8px 10px;
-}
-
-.sf-box .k { color: var(--pixel-2); font-size: 8px; }
-.sf-box .v { color: var(--gold); font-size: 14px; margin-top: 2px; font-family: 'VT323', monospace; }
-.sf-box.ok .v { color: var(--green); }
-.sf-box.danger .v { color: var(--blood-2); }
+.sf-box{background:var(--bg-0);border-radius:var(--radius);padding:8px 10px}
+.sf-box .k{color:var(--text-0);font-size:11px}
+.sf-box .v{color:var(--gold);font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.sf-box.danger .v{color:var(--blood-2)}
 
 /* ===== Modal ===== */
 .modal-mask {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0,0,0,.8);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 100;
   padding: 20px;
 }
-.modal-mask.show { display: flex; }
-
+.modal-mask.show{display:flex}
 .modal {
   background: var(--bg-1);
-  border: 6px solid var(--gold);
-  box-shadow: 0 0 0 4px var(--bg-0), 0 0 0 8px var(--pixel-0);
-  max-width: 480px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,.1);
+  max-width: 460px;
   width: 100%;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 16px 48px rgba(0,0,0,.5);
 }
-
 .modal-head {
-  background: var(--bg-2);
-  padding: 12px 16px;
-  border-bottom: 4px solid var(--gold);
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 11px;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--gold);
-  text-shadow: 2px 2px 0 var(--blood);
 }
-
 .modal-close {
   background: var(--blood);
-  color: var(--pixel-3);
-  border: 2px solid var(--pixel-3);
+  color: #fff;
+  border: none;
   width: 28px;
   height: 28px;
+  border-radius: 6px;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: 700;
 }
-
-.modal-body {
-  padding: 16px;
-  overflow-y: auto;
-  font-size: 10px;
-  line-height: 1.8;
-}
-
-.modal-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px dashed var(--pixel-0);
-}
-
-.modal-row .lbl { color: var(--pixel-2); }
-.modal-row .val { color: var(--gold); }
-
-.btn-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 14px;
-  flex-wrap: wrap;
-}
-
-.btn-row .btn { flex: 1; min-width: 90px; }
+.modal-body{padding:16px 18px;overflow-y:auto;font-size:13px;line-height:1.7}
+.modal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.modal-row .lbl{color:var(--text-0)}
+.modal-row .val{color:var(--gold);font-weight:600}
+.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn-row .btn{flex:1;min-width:80px}
 
 input.pixel-input {
   background: var(--bg-0);
-  color: var(--gold);
-  border: 3px solid var(--pixel-0);
-  padding: 8px 10px;
-  font-family: 'VT323', monospace;
-  font-size: 16px;
+  color: var(--text-2);
+  border: 2px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 14px;
   width: 100%;
   outline: none;
+  font-family: 'JetBrains Mono', monospace;
 }
-input.pixel-input:focus { border-color: var(--gold); }
+input.pixel-input:focus{border-color:var(--gold)}
 
-/* ===== BBQ / 烤架 ===== */
+/* ===== BBQ ===== */
 .bbq-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 50;
-  display: none;
+  position: fixed;inset:0;pointer-events:none;z-index:50;display:none;
 }
-.bbq-overlay.show { display: block; }
-
+.bbq-overlay.show{display:block}
 .bbq-text {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 22px;
-  color: var(--fire-1);
-  text-shadow: 3px 3px 0 var(--blood), 0 0 14px var(--fire-0);
-  background: #000;
-  padding: 16px 32px;
-  border: 5px solid var(--fire-0);
-  letter-spacing: 2px;
-  white-space: nowrap;
-  box-shadow: 0 0 20px var(--fire-0);
-  animation: shake 0.08s steps(2) infinite;
+  position: absolute;top:25%;left:50%;transform:translateX(-50%);
+  font-size: 20px;font-weight:800;color:var(--fire-1);
+  background:#000;padding:14px 28px;border-radius:10px;
+  border:2px solid var(--fire-0);box-shadow:0 0 24px var(--fire-0);
+  animation:shake .1s steps(2) infinite;
 }
-
 @keyframes shake {
-  0%, 100% { transform: translateX(-50%) translate(0, 0) rotate(0); }
-  25%      { transform: translateX(-50%) translate(-3px, 1px) rotate(-1deg); }
-  50%      { transform: translateX(-50%) translate(3px, -1px) rotate(1deg); }
-  75%      { transform: translateX(-50%) translate(-2px, 2px) rotate(-0.5deg); }
+  0%,100%{transform:translateX(-50%)translate(0,0)}
+  25%{transform:translateX(-50%)translate(-2px,1px)}
+  50%{transform:translateX(-50%)translate(2px,-1px)}
+  75%{transform:translateX(-50%)translate(-1px,2px)}
 }
-
-.bbq-grill {
-  position: absolute;
-  bottom: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 360px;
-  height: 180px;
-}
-
-.bbq-net {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  background:
-    repeating-linear-gradient(45deg, var(--pixel-0) 0 5px, transparent 5px 10px),
-    repeating-linear-gradient(-45deg, var(--pixel-0) 0 5px, transparent 5px 10px);
-  border: 5px solid var(--pixel-1);
-  box-shadow: 0 0 12px var(--fire-0);
-}
-
-.bbq-flame {
-  position: absolute;
-  bottom: 30px;
-  width: 80px;
-  height: 120px;
-  background: linear-gradient(0deg, var(--fire-0) 0%, var(--fire-1) 40%, var(--fire-2) 70%, transparent 100%);
-  border-radius: 50% 50% 20% 20% / 80% 80% 20% 20%;
-  animation: flicker 0.15s steps(2) infinite;
-  filter: blur(3px);
-  box-shadow: 0 0 30px var(--fire-0);
-}
-.bbq-flame.f1 { left: 40px; height: 130px; }
-.bbq-flame.f2 { left: 140px; height: 160px; animation-delay: 0.05s; }
-.bbq-flame.f3 { left: 240px; height: 120px; animation-delay: 0.1s; }
-
+.bbq-grill{position:absolute;bottom:25%;left:50%;transform:translateX(-50%);width:300px;height:160px}
+.bbq-net{position:absolute;bottom:0;left:0;right:0;height:40px;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.15)0 4px,transparent 4px 8px),
+  repeating-linear-gradient(-45deg,rgba(255,255,255,.15)0 4px,transparent 4px 8px);
+  border:2px solid rgba(255,255,255,.2);border-radius:4px 4px 0 0}
+.bbq-flame{position:absolute;bottom:25px;width:70px;height:100px;
+  background:linear-gradient(0deg,var(--fire-0),var(--fire-1)50%,var(--fire-2)80%,transparent);
+  border-radius:50% 50% 20% 20%/80% 80% 20% 20%;animation:flicker .15s steps(2) infinite;filter:blur(2px)}
+.bbq-flame.f1{left:30px;height:110px}
+.bbq-flame.f2{left:115px;height:140px;animation-delay:.05s}
+.bbq-flame.f3{left:200px;height:100px;animation-delay:.1s}
 @keyframes flicker {
-  0%, 100% { transform: scaleY(1) scaleX(1) translateY(0); }
-  50%      { transform: scaleY(1.15) scaleX(0.92) translateY(-4px); }
+  0%,100%{transform:scaleY(1)scaleX(1)}
+  50%{transform:scaleY(1.12)scaleX(.9)translateY(-3px)}
 }
-
-.bbq-octopus {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 80px;
-  filter: sepia(0.7) hue-rotate(-30deg) saturate(1.8) brightness(0.85);
-  animation: bbqspin 1.5s linear infinite;
-  line-height: 1;
-}
-
-@keyframes bbqspin {
-  0%   { transform: translateX(-50%) rotate(-8deg); }
-  50%  { transform: translateX(-50%) rotate(8deg); }
-  100% { transform: translateX(-50%) rotate(-8deg); }
-}
-
-.bbq-count {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 14px;
-  color: var(--gold);
-  background: #000;
-  padding: 8px 16px;
-  border: 3px solid var(--gold);
-  letter-spacing: 1px;
-}
-
-/* ===== 红屏闪 + 血溅 ===== */
-.kill-flash {
-  position: fixed;
-  inset: 0;
-  background: var(--blood);
-  z-index: 999;
-  pointer-events: none;
-  animation: kill-flash 0.6s steps(4) forwards;
-}
-@keyframes kill-flash {
-  0%   { opacity: 0; }
-  20%  { opacity: 0.95; }
-  40%  { opacity: 0.4; }
-  60%  { opacity: 0.8; }
-  100% { opacity: 0; }
-}
-
-.splash {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  background: var(--blood);
-  border-radius: 50%;
-  z-index: 998;
-  pointer-events: none;
-  box-shadow: 0 0 4px var(--blood-2);
-  animation: splash-fly 0.8s ease-out forwards;
-}
-
-@keyframes splash-fly {
-  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
-}
-
-/* ===== Toast ===== */
-.toast {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-0);
-  border: 3px solid var(--gold);
-  padding: 12px 24px;
-  font-size: 12px;
-  color: var(--gold);
-  z-index: 200;
-  box-shadow: 0 0 0 2px var(--bg-0), 4px 4px 0 var(--shadow);
-  display: none;
-  animation: toast-in 0.2s steps(4);
-}
-.toast.show { display: block; }
-
-@keyframes toast-in {
-  0%   { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-  100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-
-/* ===== 战报 ===== */
-.report-item {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 8px;
-  padding: 8px 6px;
-  border-bottom: 2px solid var(--bg-2);
-  font-size: 9px;
-  align-items: center;
-}
-.report-item .ri-mid { color: var(--pixel-2); font-size: 8px; }
-.report-item .ri-outcome { font-size: 8px; padding: 3px 6px; }
-.report-item .ri-outcome.win { background: var(--green); color: var(--bg-0); }
-.report-item .ri-outcome.lose { background: var(--blood); color: var(--pixel-3); }
-
-/* ===== 骨堆 ===== */
-.bone-pile {
-  position: absolute;
-  bottom: 50px;
-  z-index: 2;
-  font-size: 12px;
-  display: flex;
-  gap: 2px;
-  background: var(--bg-0);
-  padding: 2px 6px;
-  border: 1px solid var(--pixel-0);
-  color: var(--pixel-2);
-}
-.bone-pile.left  { left: 8px; }
-.bone-pile.right { right: 8px; }
-
-.bone-pile .b { opacity: 0.5; transition: opacity 0.3s; }
-.bone-pile .b.fresh { opacity: 1; color: var(--blood-2); animation: bone-pop 0.3s steps(2) 3; }
-@keyframes bone-pop {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.4); }
-}
-
+.bbq-octopus{position:absolute;bottom:55px;left:50%;transform:translateX(-50%);font-size:70px;
+  filter:sepia(.7)hue-rotate(-30deg)saturate(2)brightness(.8);animation:bbqspin 1.5s linear infinite}
+@keyframes bbqspin{0%{transform:translateX(-50%)rotate(-6deg)}50%{transform:translateX(-50%)rotate(6deg)}100%{transform:translateX(-50%)rotate(-6deg)}}
+.bbq-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  font-size:13px;font-weight:600;color:var(--gold);background:#000;padding:6px 14px;border-radius:var(--radius)}
+.kill-flash{position:fixed;inset:0;background:var(--blood);z-index:999;pointer-events:none;animation:kill-f .6s steps(4) forwards}
+@keyframes kill-f{0%{opacity:0}20%{opacity:.85}40%{opacity:.3}60%{opacity:.7}100%{opacity:0}}
+.splash{position:fixed;width:10px;height:10px;background:var(--blood);border-radius:50%;z-index:998;pointer-events:none;
+  box-shadow:0 0 4px var(--blood-2);animation:sfly .7s ease-out forwards}
+@keyframes sfly{0%{transform:translate(0,0)scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy))scale(.15);opacity:0}}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);
+  background:var(--bg-2);border-radius:8px;padding:10px 22px;
+  font-size:13px;font-weight:600;color:var(--gold);
+  z-index:200;box-shadow:var(--shadow);display:none;animation:tin .2s ease-out}
+.toast.show{display:block}
+@keyframes tin{0%{transform:translateX(-50%)translateY(-15px);opacity:0}100%{transform:translateX(-50%)translateY(0);opacity:1}}
+.report-item{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}
+.report-item .ri-mid{color:var(--text-0);font-size:11px}
+.report-item .ri-outcome{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px}
+.report-item .ri-outcome.win{background:var(--green);color:#fff}
+.report-item .ri-outcome.lose{background:var(--blood);color:#fff}
+.bone-pile{position:absolute;bottom:42px;z-index:2;font-size:12px;display:flex;gap:1px;
+  background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;color:var(--text-0)}
+.bone-pile.left{left:8px}.bone-pile.right{right:8px}
+.bone-pile .b{opacity:.5}
+.bone-pile .b.fresh{opacity:1;color:var(--blood-2);animation:bpop .3s steps(2) 3}
+@keyframes bpop{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
 </style>
 </head>
 <body>
 
-<!-- 顶部状态栏 -->
 <header class="top-bar">
-  <div class="brand">🐙 章鱼哥的世界杯 v1.0</div>
+  <div class="brand">🐙 章鱼哥的世界杯</div>
   <div class="top-status">
-    <div class="stat"><span class="lbl">🐙</span><span class="val" id="hud-octopus">× 8</span></div>
+    <div class="stat"><span class="lbl">存活</span><span class="val" id="hud-octopus">× 8</span></div>
     <div class="stat"><span class="lbl">战绩</span><span class="val" id="hud-record">0 / 0</span></div>
-    <div class="stat danger"><span class="lbl">🍢</span><span class="val" id="hud-bbq">0</span></div>
+    <div class="stat danger"><span class="lbl">已烤</span><span class="val" id="hud-bbq">0</span></div>
   </div>
   <div class="clock" id="clock">--:--:--</div>
 </header>
 
 <div class="main">
-
-  <!-- 主舞台：鱼缸 -->
   <section class="stage">
     <div class="tank" id="tank">
-
-      <!-- 装饰：沙底、水草 -->
       <div class="sand"></div>
-      <div class="seaweed" style="left: 8%; height: 60px; animation-delay: 0s;"></div>
-      <div class="seaweed" style="left: 20%; height: 80px; animation-delay: 0.5s;"></div>
-      <div class="seaweed" style="right: 20%; height: 70px; animation-delay: 0.3s;"></div>
-      <div class="seaweed" style="right: 8%; height: 90px; animation-delay: 0.8s;"></div>
-      <div class="bone-pile left" id="bone-pile-left" title="主队粉丝的骨堆"></div>
-      <div class="bone-pile right" id="bone-pile-right" title="客队粉丝的骨堆"></div>
+      <div class="seaweed" style="left:8%;height:50px"></div>
+      <div class="seaweed" style="left:20%;height:70px;animation-delay:.5s"></div>
+      <div class="seaweed" style="right:20%;height:55px;animation-delay:.3s"></div>
+      <div class="seaweed" style="right:8%;height:75px;animation-delay:.8s"></div>
+      <div class="bone-pile left" id="bone-pile-left"></div>
+      <div class="bone-pile right" id="bone-pile-right"></div>
 
-      <!-- 池子 -->
       <div class="pool left" id="pool-left">
         <div class="pool-bg"></div>
         <div class="flag" id="flag-left">🇲🇽</div>
         <div class="pool-name" id="name-left">墨西哥</div>
         <div class="pool-rank" id="rank-left">FIFA #15 · A组</div>
       </div>
-
       <div class="pool right" id="pool-right">
         <div class="pool-bg"></div>
         <div class="flag" id="flag-right">🇿🇦</div>
@@ -927,53 +693,39 @@ input.pixel-input:focus { border-color: var(--gold); }
         <div class="pool-rank" id="rank-right">FIFA #61 · A组</div>
       </div>
 
-      <!-- 保罗章鱼 -->
       <div class="octopus" id="octopus">
         <div class="octopus-emoji">🐙</div>
       </div>
 
-      <!-- 顶部对阵信息 -->
       <div class="center-overlay">
         <div class="match-headline" id="match-title">⚽ 揭幕战 · A组第1轮</div>
-        <div class="match-sub" id="match-sub">⏳ 距开球 6天 23小时 · 北京时间 6/12 03:00</div>
+        <div class="match-sub" id="match-sub">⏳ 距开球 — · 北京时间 6/12 03:00</div>
       </div>
 
-      <!-- 中央 VS -->
       <div class="match-vs" id="match-vs">VS</div>
-
-      <!-- 比分 -->
       <div class="score-overlay" id="score-display">0 - 0</div>
 
-      <!-- 底部状态条 -->
       <div class="tb-box">
         <div class="box"><div class="k">状态</div><div class="v" id="tb-phase">未开赛</div></div>
         <div class="box"><div class="k">距开球</div><div class="v" id="tb-countdown">--:--</div></div>
-        <div class="box"><div class="k">🐙 状态</div><div class="v" id="tb-octo-state">巡游中</div></div>
+        <div class="box"><div class="k">🐙 状态</div><div class="v" id="tb-octo-state">待预测</div></div>
       </div>
     </div>
 
-    <!-- 操作栏 -->
     <div class="action-bar">
-      <button class="btn feed-home" id="btn-feed-home">
-        <span class="ico">🦐</span>
-        投喂主队
-      </button>
-      <button class="btn feed-away" id="btn-feed-away">
-        <span class="ico">🦑</span>
-        投喂客队
-      </button>
-      <button class="btn bet" id="btn-bet">
-        <span class="ico">🎰</span>
-        观众竞猜
-      </button>
-      <button class="btn log" id="btn-log">
-        <span class="ico">📜</span>
-        战报历史
-      </button>
+      <div class="nav-group">
+        <button class="btn nav-btn" id="btn-prev" title="上一场">◀</button>
+        <span class="nav-info" id="nav-info">1 / 104</span>
+        <button class="btn nav-btn" id="btn-next" title="下一场">▶</button>
+      </div>
+      <button class="btn feed-home" id="btn-feed-home"><span class="ico">🦐</span>投喂主队</button>
+      <button class="btn feed-away" id="btn-feed-away"><span class="ico">🦑</span>投喂客队</button>
+      <button class="btn predict" id="btn-predict"><span class="ico">🔮</span>保罗预测</button>
+      <button class="btn bet" id="btn-bet"><span class="ico">🎰</span>观众竞猜</button>
+      <button class="btn log" id="btn-log"><span class="ico">📜</span>战报</button>
     </div>
   </section>
 
-  <!-- 右侧时间线 -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-title">🏆 世界杯时间线</div>
@@ -987,20 +739,15 @@ input.pixel-input:focus { border-color: var(--gold); }
   </aside>
 </div>
 
-<!-- BBQ 覆盖层 -->
 <div class="bbq-overlay" id="bbq">
   <div class="bbq-text" id="bbq-text">🍢 烤了一只 · 还剩 7 只 🍢</div>
   <div class="bbq-grill">
-    <div class="bbq-flame f1"></div>
-    <div class="bbq-flame f2"></div>
-    <div class="bbq-flame f3"></div>
-    <div class="bbq-net"></div>
-    <div class="bbq-octopus">🐙</div>
+    <div class="bbq-flame f1"></div><div class="bbq-flame f2"></div><div class="bbq-flame f3"></div>
+    <div class="bbq-net"></div><div class="bbq-octopus">🐙</div>
   </div>
   <div class="bbq-count" id="bbq-count">累计烧烤：0 只</div>
 </div>
 
-<!-- Modal -->
 <div class="modal-mask" id="modal">
   <div class="modal">
     <div class="modal-head">
@@ -1010,940 +757,559 @@ input.pixel-input:focus { border-color: var(--gold); }
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===================================================================
- * 章鱼哥的世界杯 · 第一版
- * 单文件 HTML · 无依赖 · 双击即玩
- * =================================================================== */
-
-/* ========== 状态默认值 ========== */
-const STORAGE_KEY = 'octopus-worldcup-v1';
+const STORAGE_KEY = 'octopus-worldcup-v2';
 const defaultState = {
-  octopusTotal: 8,
-  octopusAlive: 8,
-  octopusEaten: 0,
-  correctCount: 0,
-  wrongCount: 0,
-  history: [],
-  bets: [],
-  currentMatchIdx: 0,
-  currentPrediction: null,
-  currentLocked: false,
-  currentResult: null,
-  fedHome: 0,
-  fedAway: 0,
-  deadId: 0,
-  graves: [],
+  octopusTotal: 8, octopusAlive: 8, octopusEaten: 0,
+  correctCount: 0, wrongCount: 0, history: [], bets: [],
+  currentMatchIdx: 0, currentPrediction: null, currentLocked: false,
+  currentResult: null, fedHome: 0, fedAway: 0, deadId: 0, graves: [],
 };
 
 const TEAMS = {
-  // A 组
-  Mexico:     { flag: '🇲🇽', name: '墨西哥',     rank: 15, group: 'A' },
-  SouthAfrica:{ flag: '🇿🇦', name: '南非',       rank: 61, group: 'A' },
-  Korea:      { flag: '🇰🇷', name: '韩国',       rank: 22, group: 'A' },
-  Czech:      { flag: '🇨🇿', name: '捷克',       rank: 36, group: 'A' },
-  // B 组
-  Canada:     { flag: '🇨🇦', name: '加拿大',     rank: 27, group: 'B' },
-  Bosnia:     { flag: '🇧🇦', name: '波黑',       rank: 74, group: 'B' },
-  Qatar:      { flag: '🇶🇦', name: '卡塔尔',     rank: 34, group: 'B' },
-  Swiss:      { flag: '🇨🇭', name: '瑞士',       rank: 19, group: 'B' },
-  // C 组
-  Brazil:     { flag: '🇧🇷', name: '巴西',       rank: 5,  group: 'C' },
-  Morocco:    { flag: '🇲🇦', name: '摩洛哥',     rank: 13, group: 'C' },
-  Scotland:   { flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', name: '苏格兰', rank: 39, group: 'C' },
-  Haiti:      { flag: '🇭🇹', name: '海地',       rank: 83, group: 'C' },
-  // D 组
-  USA:        { flag: '🇺🇸', name: '美国',       rank: 16, group: 'D' },
-  Australia:  { flag: '🇦🇺', name: '澳大利亚',   rank: 24, group: 'D' },
-  Paraguay:   { flag: '🇵🇾', name: '巴拉圭',     rank: 42, group: 'D' },
-  Turkey:     { flag: '🇹🇷', name: '土耳其',     rank: 26, group: 'D' },
-  // E 组
-  Germany:    { flag: '🇩🇪', name: '德国',       rank: 9,  group: 'E' },
-  Curacao:    { flag: '🇨🇼', name: '库拉索',     rank: 82, group: 'E' },
-  IvoryCoast: { flag: '🇨🇮', name: '科特迪瓦',   rank: 44, group: 'E' },
-  Ecuador:    { flag: '🇪🇨', name: '厄瓜多尔',   rank: 23, group: 'E' },
-  // F 组
-  Netherlands:{ flag: '🇳🇱', name: '荷兰',       rank: 7,  group: 'F' },
-  Japan:      { flag: '🇯🇵', name: '日本',       rank: 18, group: 'F' },
-  Sweden:     { flag: '🇸🇪', name: '瑞典',       rank: 28, group: 'F' },
-  Tunisia:    { flag: '🇹🇳', name: '突尼斯',     rank: 41, group: 'F' },
-  // G 组
-  Belgium:    { flag: '🇧🇪', name: '比利时',     rank: 8,  group: 'G' },
-  Iran:       { flag: '🇮🇷', name: '伊朗',       rank: 21, group: 'G' },
-  Egypt:      { flag: '🇪🇬', name: '埃及',       rank: 35, group: 'G' },
-  NewZealand: { flag: '🇳🇿', name: '新西兰',     rank: 86, group: 'G' },
-  // H 组
-  Spain:      { flag: '🇪🇸', name: '西班牙',     rank: 1,  group: 'H' },
-  Uruguay:    { flag: '🇺🇾', name: '乌拉圭',     rank: 14, group: 'H' },
-  Saudi:      { flag: '🇸🇦', name: '沙特',       rank: 56, group: 'H' },
-  CapeVerde:  { flag: '🇨🇻', name: '佛得角',     rank: 67, group: 'H' },
-  // I 组
-  France:     { flag: '🇫🇷', name: '法国',       rank: 2,  group: 'I' },
-  Senegal:    { flag: '🇸🇳', name: '塞内加尔',   rank: 17, group: 'I' },
-  Norway:     { flag: '🇳🇴', name: '挪威',       rank: 30, group: 'I' },
-  Iraq:       { flag: '🇮🇶', name: '伊拉克',     rank: 58, group: 'I' },
-  // J 组
-  Argentina:  { flag: '🇦🇷', name: '阿根廷',     rank: 3,  group: 'J' },
-  Austria:    { flag: '🇦🇹', name: '奥地利',     rank: 25, group: 'J' },
-  Algeria:    { flag: '🇩🇿', name: '阿尔及利亚', rank: 32, group: 'J' },
-  Jordan:     { flag: '🇯🇴', name: '约旦',       rank: 64, group: 'J' },
-  // K 组
-  Portugal:   { flag: '🇵🇹', name: '葡萄牙',     rank: 6,  group: 'K' },
-  Colombia:   { flag: '🇨🇴', name: '哥伦比亚',   rank: 12, group: 'K' },
-  Uzbekistan: { flag: '🇺🇿', name: '乌兹别克斯坦', rank: 53, group: 'K' },
-  Congo:      { flag: '🇨🇩', name: '刚果（金）', rank: 48, group: 'K' },
-  // L 组
-  England:    { flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', name: '英格兰', rank: 4,  group: 'L' },
-  Croatia:    { flag: '🇭🇷', name: '克罗地亚',   rank: 10, group: 'L' },
-  Panama:     { flag: '🇵🇦', name: '巴拿马',     rank: 46, group: 'L' },
-  Ghana:      { flag: '🇬🇭', name: '加纳',       rank: 70, group: 'L' },
+  Mexico:{flag:'🇲🇽',name:'墨西哥',rank:15,group:'A'}, SouthAfrica:{flag:'🇿🇦',name:'南非',rank:61,group:'A'},
+  Korea:{flag:'🇰🇷',name:'韩国',rank:22,group:'A'}, Czech:{flag:'🇨🇿',name:'捷克',rank:36,group:'A'},
+  Canada:{flag:'🇨🇦',name:'加拿大',rank:27,group:'B'}, Bosnia:{flag:'🇧🇦',name:'波黑',rank:74,group:'B'},
+  Qatar:{flag:'🇶🇦',name:'卡塔尔',rank:34,group:'B'}, Swiss:{flag:'🇨🇭',name:'瑞士',rank:19,group:'B'},
+  Brazil:{flag:'🇧🇷',name:'巴西',rank:5,group:'C'}, Morocco:{flag:'🇲🇦',name:'摩洛哥',rank:13,group:'C'},
+  Scotland:{flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',name:'苏格兰',rank:39,group:'C'}, Haiti:{flag:'🇭🇹',name:'海地',rank:83,group:'C'},
+  USA:{flag:'🇺🇸',name:'美国',rank:16,group:'D'}, Australia:{flag:'🇦🇺',name:'澳大利亚',rank:24,group:'D'},
+  Paraguay:{flag:'🇵🇾',name:'巴拉圭',rank:42,group:'D'}, Turkey:{flag:'🇹🇷',name:'土耳其',rank:26,group:'D'},
+  Germany:{flag:'🇩🇪',name:'德国',rank:9,group:'E'}, Curacao:{flag:'🇨🇼',name:'库拉索',rank:82,group:'E'},
+  IvoryCoast:{flag:'🇨🇮',name:'科特迪瓦',rank:44,group:'E'}, Ecuador:{flag:'🇪🇨',name:'厄瓜多尔',rank:23,group:'E'},
+  Netherlands:{flag:'🇳🇱',name:'荷兰',rank:7,group:'F'}, Japan:{flag:'🇯🇵',name:'日本',rank:18,group:'F'},
+  Sweden:{flag:'🇸🇪',name:'瑞典',rank:28,group:'F'}, Tunisia:{flag:'🇹🇳',name:'突尼斯',rank:41,group:'F'},
+  Belgium:{flag:'🇧🇪',name:'比利时',rank:8,group:'G'}, Iran:{flag:'🇮🇷',name:'伊朗',rank:21,group:'G'},
+  Egypt:{flag:'🇪🇬',name:'埃及',rank:35,group:'G'}, NewZealand:{flag:'🇳🇿',name:'新西兰',rank:86,group:'G'},
+  Spain:{flag:'🇪🇸',name:'西班牙',rank:1,group:'H'}, Uruguay:{flag:'🇺🇾',name:'乌拉圭',rank:14,group:'H'},
+  Saudi:{flag:'🇸🇦',name:'沙特',rank:56,group:'H'}, CapeVerde:{flag:'🇨🇻',name:'佛得角',rank:67,group:'H'},
+  France:{flag:'🇫🇷',name:'法国',rank:2,group:'I'}, Senegal:{flag:'🇸🇳',name:'塞内加尔',rank:17,group:'I'},
+  Norway:{flag:'🇳🇴',name:'挪威',rank:30,group:'I'}, Iraq:{flag:'🇮🇶',name:'伊拉克',rank:58,group:'I'},
+  Argentina:{flag:'🇦🇷',name:'阿根廷',rank:3,group:'J'}, Austria:{flag:'🇦🇹',name:'奥地利',rank:25,group:'J'},
+  Algeria:{flag:'🇩🇿',name:'阿尔及利亚',rank:32,group:'J'}, Jordan:{flag:'🇯🇴',name:'约旦',rank:64,group:'J'},
+  Portugal:{flag:'🇵🇹',name:'葡萄牙',rank:6,group:'K'}, Colombia:{flag:'🇨🇴',name:'哥伦比亚',rank:12,group:'K'},
+  Uzbekistan:{flag:'🇺🇿',name:'乌兹别克斯坦',rank:53,group:'K'}, Congo:{flag:'🇨🇩',name:'刚果（金）',rank:48,group:'K'},
+  England:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',name:'英格兰',rank:4,group:'L'}, Croatia:{flag:'🇭🇷',name:'克罗地亚',rank:10,group:'L'},
+  Panama:{flag:'🇵🇦',name:'巴拿马',rank:46,group:'L'}, Ghana:{flag:'🇬🇭',name:'加纳',rank:70,group:'L'},
 };
 
-/* ========== 真实 2026 世界杯赛程（北京时间） ==========
- * 数据源：FIFA 官方 / 央视体育 / 球天下体育 等综合
- * =================================================================== */
 const SCHEDULE = [
-  // 6/12 周五
-  { date: '2026-06-12', kickoff: '03:00', home: 'Mexico',    away: 'SouthAfrica', stage: '小组赛A1' },
-  { date: '2026-06-12', kickoff: '10:00', home: 'Korea',      away: 'Czech',       stage: '小组赛A1' },
-  // 6/13 周六
-  { date: '2026-06-13', kickoff: '03:00', home: 'Canada',    away: 'Bosnia',      stage: '小组赛B1' },
-  { date: '2026-06-13', kickoff: '09:00', home: 'USA',        away: 'Paraguay',    stage: '小组赛D1' },
-  // 6/14 周日
-  { date: '2026-06-14', kickoff: '03:00', home: 'Qatar',     away: 'Swiss',       stage: '小组赛B1' },
-  { date: '2026-06-14', kickoff: '06:00', home: 'Brazil',    away: 'Morocco',     stage: '小组赛C1' },
-  { date: '2026-06-14', kickoff: '09:00', home: 'Haiti',     away: 'Scotland',    stage: '小组赛C1' },
-  { date: '2026-06-14', kickoff: '12:00', home: 'Australia', away: 'Turkey',      stage: '小组赛D1' },
-  // 6/15 周一
-  { date: '2026-06-15', kickoff: '01:00', home: 'Germany',   away: 'Curacao',     stage: '小组赛E1' },
-  { date: '2026-06-15', kickoff: '04:00', home: 'Netherlands', away: 'Japan',     stage: '小组赛F1' },
-  { date: '2026-06-15', kickoff: '07:00', home: 'IvoryCoast', away: 'Ecuador',    stage: '小组赛E1' },
-  { date: '2026-06-15', kickoff: '10:00', home: 'Sweden',    away: 'Tunisia',     stage: '小组赛F1' },
-  // 6/16 周二
-  { date: '2026-06-16', kickoff: '00:00', home: 'Spain',     away: 'CapeVerde',   stage: '小组赛H1' },
-  { date: '2026-06-16', kickoff: '03:00', home: 'Belgium',   away: 'Egypt',       stage: '小组赛G1' },
-  { date: '2026-06-16', kickoff: '06:00', home: 'Saudi',     away: 'Uruguay',     stage: '小组赛H1' },
-  { date: '2026-06-16', kickoff: '09:00', home: 'Iran',      away: 'NewZealand',  stage: '小组赛G1' },
-  // 6/17 周三
-  { date: '2026-06-17', kickoff: '03:00', home: 'France',    away: 'Senegal',     stage: '小组赛I1' },
-  { date: '2026-06-17', kickoff: '06:00', home: 'Iraq',      away: 'Norway',      stage: '小组赛I1' },
-  { date: '2026-06-17', kickoff: '09:00', home: 'Argentina', away: 'Algeria',     stage: '小组赛J1' },
-  { date: '2026-06-17', kickoff: '12:00', home: 'Austria',   away: 'Jordan',      stage: '小组赛J1' },
-  // 6/18 周四
-  { date: '2026-06-18', kickoff: '01:00', home: 'Portugal',  away: 'Congo',       stage: '小组赛K1' },
-  { date: '2026-06-18', kickoff: '04:00', home: 'England',   away: 'Croatia',     stage: '小组赛L1' },
-  { date: '2026-06-18', kickoff: '07:00', home: 'Colombia',  away: 'Uzbekistan',  stage: '小组赛K1' },
-  { date: '2026-06-18', kickoff: '10:00', home: 'Panama',    away: 'Ghana',       stage: '小组赛L1' },
-  // 6/19 周五 第二轮
-  { date: '2026-06-19', kickoff: '00:00', home: 'Mexico',       away: 'Korea',       stage: '小组赛A2' },
-  { date: '2026-06-19', kickoff: '03:00', home: 'Czech',         away: 'SouthAfrica', stage: '小组赛A2' },
-  { date: '2026-06-19', kickoff: '06:00', home: 'Canada',        away: 'Qatar',       stage: '小组赛B2' },
-  { date: '2026-06-19', kickoff: '09:00', home: 'Swiss',         away: 'Bosnia',      stage: '小组赛B2' },
-  // 6/20 周六
-  { date: '2026-06-20', kickoff: '06:00', home: 'Brazil',        away: 'Scotland',    stage: '小组赛C2' },
-  { date: '2026-06-20', kickoff: '09:00', home: 'Morocco',       away: 'Haiti',       stage: '小组赛C2' },
-  { date: '2026-06-20', kickoff: '12:00', home: 'USA',           away: 'Turkey',      stage: '小组赛D2' },
-  { date: '2026-06-21', kickoff: '04:00', home: 'Australia',     away: 'Paraguay',    stage: '小组赛D2' },
-  // 6/21 周日
-  { date: '2026-06-21', kickoff: '07:00', home: 'Germany',       away: 'Ecuador',     stage: '小组赛E2' },
-  { date: '2026-06-21', kickoff: '10:00', home: 'IvoryCoast',    away: 'Curacao',     stage: '小组赛E2' },
-  { date: '2026-06-22', kickoff: '01:00', home: 'Netherlands',   away: 'Tunisia',     stage: '小组赛F2' },
-  { date: '2026-06-22', kickoff: '04:00', home: 'Sweden',        away: 'Japan',       stage: '小组赛F2' },
-  // 6/22 周一
-  { date: '2026-06-22', kickoff: '07:00', home: 'Spain',         away: 'Saudi',       stage: '小组赛H2' },
-  { date: '2026-06-22', kickoff: '10:00', home: 'Uruguay',       away: 'CapeVerde',   stage: '小组赛H2' },
-  { date: '2026-06-23', kickoff: '03:00', home: 'Belgium',       away: 'Iran',        stage: '小组赛G2' },
-  { date: '2026-06-23', kickoff: '06:00', home: 'Egypt',         away: 'NewZealand',  stage: '小组赛G2' },
-  // 6/23 周二
-  { date: '2026-06-23', kickoff: '09:00', home: 'France',        away: 'Norway',      stage: '小组赛I2' },
-  { date: '2026-06-24', kickoff: '04:00', home: 'Senegal',       away: 'Iraq',        stage: '小组赛I2' },
-  { date: '2026-06-24', kickoff: '07:00', home: 'Argentina',     away: 'Jordan',      stage: '小组赛J2' },
-  { date: '2026-06-24', kickoff: '10:00', home: 'Austria',       away: 'Algeria',     stage: '小组赛J2' },
-  // 6/25 周三
-  { date: '2026-06-25', kickoff: '03:00', home: 'Mexico',       away: 'Czech',       stage: '小组赛A3' },
-  { date: '2026-06-25', kickoff: '06:00', home: 'SouthAfrica',  away: 'Korea',       stage: '小组赛A3' },
-  { date: '2026-06-25', kickoff: '09:00', home: 'Swiss',        away: 'Canada',      stage: '小组赛B3' },
-  { date: '2026-06-26', kickoff: '03:00', home: 'Bosnia',       away: 'Qatar',       stage: '小组赛B3' },
-  { date: '2026-06-26', kickoff: '06:00', home: 'Brazil',       away: 'Haiti',       stage: '小组赛C3' },
-  { date: '2026-06-26', kickoff: '09:00', home: 'Morocco',      away: 'Scotland',    stage: '小组赛C3' },
-  { date: '2026-06-27', kickoff: '01:00', home: 'USA',          away: 'Paraguay',    stage: '小组赛D3' },
-  { date: '2026-06-27', kickoff: '04:00', home: 'Australia',    away: 'Turkey',      stage: '小组赛D3' },
-  // 6/28 周日
-  { date: '2026-06-28', kickoff: '01:00', home: 'Germany',      away: 'IvoryCoast',  stage: '小组赛E3' },
-  { date: '2026-06-28', kickoff: '04:00', home: 'Ecuador',      away: 'Curacao',     stage: '小组赛E3' },
-  { date: '2026-06-28', kickoff: '07:00', home: 'Netherlands',   away: 'Japan',       stage: '小组赛F3' },
-  { date: '2026-06-28', kickoff: '10:00', home: 'Sweden',       away: 'Tunisia',     stage: '小组赛F3' },
-  { date: '2026-06-29', kickoff: '03:00', home: 'Spain',        away: 'Uruguay',     stage: '小组赛H3' },
-  { date: '2026-06-29', kickoff: '06:00', home: 'Saudi',        away: 'CapeVerde',   stage: '小组赛H3' },
-  // 6/30 周二
-  { date: '2026-06-30', kickoff: '03:00', home: 'Belgium',      away: 'NewZealand',  stage: '小组赛G3' },
-  { date: '2026-06-30', kickoff: '06:00', home: 'Egypt',        away: 'Iran',        stage: '小组赛G3' },
-  { date: '2026-06-30', kickoff: '09:00', home: 'France',       away: 'Iraq',        stage: '小组赛I3' },
-  { date: '2026-07-01', kickoff: '03:00', home: 'Senegal',      away: 'Norway',      stage: '小组赛I3' },
-  { date: '2026-07-01', kickoff: '06:00', home: 'Argentina',    away: 'Austria',     stage: '小组赛J3' },
-  { date: '2026-07-01', kickoff: '09:00', home: 'Algeria',      away: 'Jordan',      stage: '小组赛J3' },
-  { date: '2026-07-02', kickoff: '03:00', home: 'Portugal',     away: 'Colombia',    stage: '小组赛K3' },
-  { date: '2026-07-02', kickoff: '06:00', home: 'Congo',        away: 'Uzbekistan',  stage: '小组赛K3' },
-  { date: '2026-07-02', kickoff: '09:00', home: 'England',      away: 'Ghana',       stage: '小组赛L3' },
-  { date: '2026-07-02', kickoff: '12:00', home: 'Croatia',      away: 'Panama',      stage: '小组赛L3' },
-  // 淘汰赛
-  { date: '2026-07-07', kickoff: '03:00', home: '?', away: '?', stage: '32强', tbd: true },
-  { date: '2026-07-07', kickoff: '06:00', home: '?', away: '?', stage: '32强', tbd: true },
-  { date: '2026-07-08', kickoff: '03:00', home: '?', away: '?', stage: '32强', tbd: true },
-  { date: '2026-07-08', kickoff: '06:00', home: '?', away: '?', stage: '32强', tbd: true },
-  { date: '2026-07-12', kickoff: '03:00', home: '?', away: '?', stage: '16强', tbd: true },
-  { date: '2026-07-12', kickoff: '09:00', home: '?', away: '?', stage: '16强', tbd: true },
-  { date: '2026-07-13', kickoff: '03:00', home: '?', away: '?', stage: '16强', tbd: true },
-  { date: '2026-07-13', kickoff: '09:00', home: '?', away: '?', stage: '16强', tbd: true },
-  { date: '2026-07-18', kickoff: '03:00', home: '?', away: '?', stage: '8强', tbd: true },
-  { date: '2026-07-18', kickoff: '09:00', home: '?', away: '?', stage: '8强', tbd: true },
-  { date: '2026-07-19', kickoff: '03:00', home: '?', away: '?', stage: '8强', tbd: true },
-  { date: '2026-07-19', kickoff: '09:00', home: '?', away: '?', stage: '8强', tbd: true },
-  { date: '2026-07-21', kickoff: '03:00', home: '?', away: '?', stage: '半决赛', tbd: true },
-  { date: '2026-07-21', kickoff: '09:00', home: '?', away: '?', stage: '半决赛', tbd: true },
-  { date: '2026-07-22', kickoff: '09:00', home: '?', away: '?', stage: '季军赛', tbd: true },
-  { date: '2026-07-23', kickoff: '12:00', home: '?', away: '?', stage: '决赛', tbd: true },
+  {date:'2026-06-12',kickoff:'03:00',home:'Mexico',away:'SouthAfrica',stage:'小组赛A1'},
+  {date:'2026-06-12',kickoff:'10:00',home:'Korea',away:'Czech',stage:'小组赛A1'},
+  {date:'2026-06-13',kickoff:'03:00',home:'Canada',away:'Bosnia',stage:'小组赛B1'},
+  {date:'2026-06-13',kickoff:'09:00',home:'USA',away:'Paraguay',stage:'小组赛D1'},
+  {date:'2026-06-14',kickoff:'03:00',home:'Qatar',away:'Swiss',stage:'小组赛B1'},
+  {date:'2026-06-14',kickoff:'06:00',home:'Brazil',away:'Morocco',stage:'小组赛C1'},
+  {date:'2026-06-14',kickoff:'09:00',home:'Haiti',away:'Scotland',stage:'小组赛C1'},
+  {date:'2026-06-14',kickoff:'12:00',home:'Australia',away:'Turkey',stage:'小组赛D1'},
+  {date:'2026-06-15',kickoff:'01:00',home:'Germany',away:'Curacao',stage:'小组赛E1'},
+  {date:'2026-06-15',kickoff:'04:00',home:'Netherlands',away:'Japan',stage:'小组赛F1'},
+  {date:'2026-06-15',kickoff:'07:00',home:'IvoryCoast',away:'Ecuador',stage:'小组赛E1'},
+  {date:'2026-06-15',kickoff:'10:00',home:'Sweden',away:'Tunisia',stage:'小组赛F1'},
+  {date:'2026-06-16',kickoff:'00:00',home:'Spain',away:'CapeVerde',stage:'小组赛H1'},
+  {date:'2026-06-16',kickoff:'03:00',home:'Belgium',away:'Egypt',stage:'小组赛G1'},
+  {date:'2026-06-16',kickoff:'06:00',home:'Saudi',away:'Uruguay',stage:'小组赛H1'},
+  {date:'2026-06-16',kickoff:'09:00',home:'Iran',away:'NewZealand',stage:'小组赛G1'},
+  {date:'2026-06-17',kickoff:'03:00',home:'France',away:'Senegal',stage:'小组赛I1'},
+  {date:'2026-06-17',kickoff:'06:00',home:'Iraq',away:'Norway',stage:'小组赛I1'},
+  {date:'2026-06-17',kickoff:'09:00',home:'Argentina',away:'Algeria',stage:'小组赛J1'},
+  {date:'2026-06-17',kickoff:'12:00',home:'Austria',away:'Jordan',stage:'小组赛J1'},
+  {date:'2026-06-18',kickoff:'01:00',home:'Portugal',away:'Congo',stage:'小组赛K1'},
+  {date:'2026-06-18',kickoff:'04:00',home:'England',away:'Croatia',stage:'小组赛L1'},
+  {date:'2026-06-18',kickoff:'07:00',home:'Colombia',away:'Uzbekistan',stage:'小组赛K1'},
+  {date:'2026-06-18',kickoff:'10:00',home:'Panama',away:'Ghana',stage:'小组赛L1'},
+  {date:'2026-06-19',kickoff:'00:00',home:'Mexico',away:'Korea',stage:'小组赛A2'},
+  {date:'2026-06-19',kickoff:'03:00',home:'Czech',away:'SouthAfrica',stage:'小组赛A2'},
+  {date:'2026-06-19',kickoff:'06:00',home:'Canada',away:'Qatar',stage:'小组赛B2'},
+  {date:'2026-06-19',kickoff:'09:00',home:'Swiss',away:'Bosnia',stage:'小组赛B2'},
+  {date:'2026-06-20',kickoff:'06:00',home:'Brazil',away:'Scotland',stage:'小组赛C2'},
+  {date:'2026-06-20',kickoff:'09:00',home:'Morocco',away:'Haiti',stage:'小组赛C2'},
+  {date:'2026-06-20',kickoff:'12:00',home:'USA',away:'Turkey',stage:'小组赛D2'},
+  {date:'2026-06-21',kickoff:'04:00',home:'Australia',away:'Paraguay',stage:'小组赛D2'},
+  {date:'2026-06-21',kickoff:'07:00',home:'Germany',away:'Ecuador',stage:'小组赛E2'},
+  {date:'2026-06-21',kickoff:'10:00',home:'IvoryCoast',away:'Curacao',stage:'小组赛E2'},
+  {date:'2026-06-22',kickoff:'01:00',home:'Netherlands',away:'Tunisia',stage:'小组赛F2'},
+  {date:'2026-06-22',kickoff:'04:00',home:'Sweden',away:'Japan',stage:'小组赛F2'},
+  {date:'2026-06-22',kickoff:'07:00',home:'Spain',away:'Saudi',stage:'小组赛H2'},
+  {date:'2026-06-22',kickoff:'10:00',home:'Uruguay',away:'CapeVerde',stage:'小组赛H2'},
+  {date:'2026-06-23',kickoff:'03:00',home:'Belgium',away:'Iran',stage:'小组赛G2'},
+  {date:'2026-06-23',kickoff:'06:00',home:'Egypt',away:'NewZealand',stage:'小组赛G2'},
+  {date:'2026-06-23',kickoff:'09:00',home:'France',away:'Norway',stage:'小组赛I2'},
+  {date:'2026-06-24',kickoff:'04:00',home:'Senegal',away:'Iraq',stage:'小组赛I2'},
+  {date:'2026-06-24',kickoff:'07:00',home:'Argentina',away:'Jordan',stage:'小组赛J2'},
+  {date:'2026-06-24',kickoff:'10:00',home:'Austria',away:'Algeria',stage:'小组赛J2'},
+  {date:'2026-06-25',kickoff:'03:00',home:'Mexico',away:'Czech',stage:'小组赛A3'},
+  {date:'2026-06-25',kickoff:'06:00',home:'SouthAfrica',away:'Korea',stage:'小组赛A3'},
+  {date:'2026-06-25',kickoff:'09:00',home:'Swiss',away:'Canada',stage:'小组赛B3'},
+  {date:'2026-06-26',kickoff:'03:00',home:'Bosnia',away:'Qatar',stage:'小组赛B3'},
+  {date:'2026-06-26',kickoff:'06:00',home:'Brazil',away:'Haiti',stage:'小组赛C3'},
+  {date:'2026-06-26',kickoff:'09:00',home:'Morocco',away:'Scotland',stage:'小组赛C3'},
+  {date:'2026-06-27',kickoff:'01:00',home:'USA',away:'Paraguay',stage:'小组赛D3'},
+  {date:'2026-06-27',kickoff:'04:00',home:'Australia',away:'Turkey',stage:'小组赛D3'},
+  {date:'2026-06-28',kickoff:'01:00',home:'Germany',away:'IvoryCoast',stage:'小组赛E3'},
+  {date:'2026-06-28',kickoff:'04:00',home:'Ecuador',away:'Curacao',stage:'小组赛E3'},
+  {date:'2026-06-28',kickoff:'07:00',home:'Netherlands',away:'Japan',stage:'小组赛F3'},
+  {date:'2026-06-28',kickoff:'10:00',home:'Sweden',away:'Tunisia',stage:'小组赛F3'},
+  {date:'2026-06-29',kickoff:'03:00',home:'Spain',away:'Uruguay',stage:'小组赛H3'},
+  {date:'2026-06-29',kickoff:'06:00',home:'Saudi',away:'CapeVerde',stage:'小组赛H3'},
+  {date:'2026-06-30',kickoff:'03:00',home:'Belgium',away:'NewZealand',stage:'小组赛G3'},
+  {date:'2026-06-30',kickoff:'06:00',home:'Egypt',away:'Iran',stage:'小组赛G3'},
+  {date:'2026-06-30',kickoff:'09:00',home:'France',away:'Iraq',stage:'小组赛I3'},
+  {date:'2026-07-01',kickoff:'03:00',home:'Senegal',away:'Norway',stage:'小组赛I3'},
+  {date:'2026-07-01',kickoff:'06:00',home:'Argentina',away:'Austria',stage:'小组赛J3'},
+  {date:'2026-07-01',kickoff:'09:00',home:'Algeria',away:'Jordan',stage:'小组赛J3'},
+  {date:'2026-07-02',kickoff:'03:00',home:'Portugal',away:'Colombia',stage:'小组赛K3'},
+  {date:'2026-07-02',kickoff:'06:00',home:'Congo',away:'Uzbekistan',stage:'小组赛K3'},
+  {date:'2026-07-02',kickoff:'09:00',home:'England',away:'Ghana',stage:'小组赛L3'},
+  {date:'2026-07-02',kickoff:'12:00',home:'Croatia',away:'Panama',stage:'小组赛L3'},
+  {date:'2026-07-07',kickoff:'03:00',home:'?',away:'?',stage:'32强',tbd:true},
+  {date:'2026-07-07',kickoff:'06:00',home:'?',away:'?',stage:'32强',tbd:true},
+  {date:'2026-07-08',kickoff:'03:00',home:'?',away:'?',stage:'32强',tbd:true},
+  {date:'2026-07-08',kickoff:'06:00',home:'?',away:'?',stage:'32强',tbd:true},
+  {date:'2026-07-12',kickoff:'03:00',home:'?',away:'?',stage:'16强',tbd:true},
+  {date:'2026-07-12',kickoff:'09:00',home:'?',away:'?',stage:'16强',tbd:true},
+  {date:'2026-07-13',kickoff:'03:00',home:'?',away:'?',stage:'16强',tbd:true},
+  {date:'2026-07-13',kickoff:'09:00',home:'?',away:'?',stage:'16强',tbd:true},
+  {date:'2026-07-18',kickoff:'03:00',home:'?',away:'?',stage:'8强',tbd:true},
+  {date:'2026-07-18',kickoff:'09:00',home:'?',away:'?',stage:'8强',tbd:true},
+  {date:'2026-07-19',kickoff:'03:00',home:'?',away:'?',stage:'8强',tbd:true},
+  {date:'2026-07-19',kickoff:'09:00',home:'?',away:'?',stage:'8强',tbd:true},
+  {date:'2026-07-21',kickoff:'03:00',home:'?',away:'?',stage:'半决赛',tbd:true},
+  {date:'2026-07-21',kickoff:'09:00',home:'?',away:'?',stage:'半决赛',tbd:true},
+  {date:'2026-07-22',kickoff:'09:00',home:'?',away:'?',stage:'季军赛',tbd:true},
+  {date:'2026-07-23',kickoff:'12:00',home:'?',away:'?',stage:'决赛',tbd:true},
 ];
 
-/* ========== 工具 ========== */
-const $ = (sel) => document.querySelector(sel);
-const $$ = (sel) => document.querySelectorAll(sel);
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+let state=loadState();
+function loadState(){try{const r=localStorage.getItem(STORAGE_KEY);if(r)return{...defaultState,...JSON.parse(r)}}catch(e){}return{...defaultState}}
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function resetGame(){if(!confirm('真的要重置赛季吗？所有 🐙 和战报都会清空。'))return;state={...defaultState};state.currentMatchIdx=findCurrentMatchIdx();saveState();renderAll();toast('已重置。8 只章鱼已下水。')}
+function getKickoffDate(m){if(m.tbd)return null;return new Date(m.date+'T'+m.kickoff+':00+08:00')}
+function fmtCountdown(ms){if(ms<0)ms=0;const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60);if(h>=24){const d=Math.floor(h/24);return d+'天 '+h%24+'h'}if(h>0)return h+'h '+m+'m';return m+'m'}
+function fmtClock(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0')}
+function isSameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
 
-let state = loadState();
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { ...defaultState, ...JSON.parse(raw) };
-  } catch (e) {}
-  return { ...defaultState };
+function findCurrentMatchIdx(){
+  const now=Date.now();
+  let nextUpcoming=-1,currentLive=-1;
+  for(let i=0;i<SCHEDULE.length;i++){const m=SCHEDULE[i];if(m.tbd)continue;const ko=getKickoffDate(m);if(!ko)continue;const kt=ko.getTime();if(kt>now&&nextUpcoming===-1)nextUpcoming=i;if(kt<=now&&now<kt+2*3600*1000)currentLive=i}
+  if(currentLive>=0){const v=state.history.find(h=>h.matchIdx===currentLive);if(!v||!v.verdict)return currentLive}
+  for(let i=0;i<SCHEDULE.length;i++){const m=SCHEDULE[i];if(m.tbd)continue;const ko=getKickoffDate(m);if(!ko)continue;if(ko.getTime()>now)break;const v=state.history.find(h=>h.matchIdx===i);if(!v||!v.verdict)return i}
+  if(nextUpcoming>=0)return nextUpcoming;
+  return Math.min(state.currentMatchIdx,SCHEDULE.length-1);
 }
-function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+
+function getPhase(m){if(m.tbd)return'tbd';const ko=getKickoffDate(m);if(!ko)return'tbd';const ms=ko.getTime()-Date.now();const v=state.history.find(h=>h.matchIdx===state.currentMatchIdx);if(v&&v.verdict)return'finished';if(ms>24*3600*1000)return'pre';if(ms>0)return'soon';if(ms>-2*3600*1000)return'live';return'overdue'}
+function phaseCN(p){return({pre:'未开赛',soon:'即将开赛',live:'进行中',overdue:'待结果',finished:'已揭晓',tbd:'待定'})[p]||p}
+
+/* ========== 🐙 导航 ========== */
+function navMatch(dir){
+  const v=state.history.find(h=>h.matchIdx===state.currentMatchIdx);
+  if(v&&v.verdict){jumpToMatch(state.currentMatchIdx+dir);return}
+  if(state.currentLocked&&!confirm('保罗已经锁定了本场预测，切换会清掉当前状态，确定吗？'))return;
+  jumpToMatch(state.currentMatchIdx+dir);
 }
-function resetGame() {
-  if (!confirm('真的要重置赛季吗？所有 🐙 和战报都会清空。')) return;
-  state = { ...defaultState };
-  state.currentMatchIdx = findNextMatchIdx();
+function jumpToMatch(idx){
+  if(idx<0||idx>=SCHEDULE.length)return;
+  if(SCHEDULE[idx].tbd){toast('该阶段还未抽签 🐙');return}
+  state.currentMatchIdx=idx;
+  state.currentPrediction=null;
+  state.currentLocked=false;
+  state.fedHome=0;state.fedAway=0;
+  saveState();renderAll();
+  toast('切换至 '+SCHEDULE[idx].stage+' · '+SCHEDULE[idx].date.slice(5));
+}
+
+/* ========== 🐙 预测 AI（多因素版） ========== */
+function octopusThink(match){
+  const home=TEAMS[match.home],away=TEAMS[match.away];
+  if(!home||!away)return{side:'home',factors:{}};
+
+  const rankDiff=away.rank-home.rank;
+  const rankScore=1/(1+Math.exp(-rankDiff/30));
+
+  const totalFed=state.fedHome+state.fedAway;
+  const fedScore=totalFed===0?0.5:state.fedHome/totalFed;
+
+  const mood=0.35+Math.random()*0.3;
+
+  const pHome=rankScore*0.5+fedScore*0.3+mood*0.2;
+
+  return {
+    side: Math.random()<pHome?'home':'away',
+    factors:{
+      rank:Math.round(rankScore*100),
+      fed:Math.round(fedScore*100),
+      mood:Math.round(mood*100),
+      home:TEAMS[match.home],away:TEAMS[match.away]
+    }
+  };
+}
+
+async function doPrediction(){
+  const m=SCHEDULE[state.currentMatchIdx];
+  if(!m||m.tbd)return;
+  if(state.currentLocked){toast('保罗已经做过选择了！');return}
+
+  const phase=getPhase(m);
+  if(phase==='finished'){toast('比赛已揭晓，等新比赛吧');return}
+
+  const btn=$('#btn-predict');
+  btn.disabled=true;
+  btn.innerHTML='<span class="ico">🐙</span>保罗思考中...';
+
+  const tank=$('#tank');
+  const octo=$('#octopus');
+  const tw=tank.clientWidth,th=tank.clientHeight;
+
+  const think=octopusThink(m);
+  const f=think.factors;
+
+  // 动画：保罗游向中间
+  octo.style.left=(tw*.5)+'px';
+  octo.style.top=(th*.45)+'px';
+  await sleep(600);
+
+  // 吐出思考泡泡
+  showBubble(tw*.48,th*.32,'🤔 FIFA差值: '+(f.away.rank-f.home.rank));
+  await sleep(800);
+  showBubble(tw*.48,th*.32,'🦐 投喂倾向: '+(state.fedHome>state.fedAway?f.home.name+'领先':'均势'));
+  await sleep(800);
+  showBubble(tw*.48,th*.32,'🎲 保罗心情: '+(f.mood>60?'超好':f.mood>40?'还行':'一般'));
+  await sleep(1000);
+
+  // 游向选择方
+  const targetX=think.side==='home'?tw*.15:tw*.85;
+  octo.style.left=targetX+'px';
+  octo.style.top=(th*.52)+'px';
+  await sleep(1000);
+
+  // 锁定
+  state.currentPrediction=think.side;
+  state.currentLocked=true;
+  audio.beep();
   saveState();
+
+  btn.innerHTML='<span class="ico">🔮</span>保罗预测';
+  btn.disabled=false;
+
+  const chosen=think.side==='home'?f.home:f.away;
+  toast('🐙 保罗选择了 '+chosen.flag+' '+chosen.name+'！');
+
   renderAll();
-  toast('已重置。8 只章鱼已下水。');
 }
 
-function getKickoffDate(m) {
-  if (m.tbd) return null;
-  return new Date(`${m.date}T${m.kickoff}:00+08:00`);
-}
-function fmtCountdown(ms) {
-  if (ms < 0) ms = 0;
-  const s = Math.floor(ms / 1000);
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  if (h >= 24) {
-    const d = Math.floor(h / 24);
-    return `${d}天 ${h % 24}h`;
-  }
-  if (h > 0) return `${h}h ${m}m`;
-  return `${m}m`;
-}
-function fmtClock(d) {
-  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
-}
-function isSameDay(a, b) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-}
-function findCurrentMatchIdx() {
-  const now = Date.now();
-  let nextUpcoming = -1, currentLive = -1;
-  for (let i = 0; i < SCHEDULE.length; i++) {
-    const m = SCHEDULE[i];
-    if (m.tbd) continue;
-    const ko = getKickoffDate(m);
-    if (!ko) continue;
-    const koTime = ko.getTime();
-    if (koTime > now && nextUpcoming === -1) nextUpcoming = i;
-    if (koTime <= now && now < koTime + 2 * 3600 * 1000) currentLive = i;
-  }
-  if (currentLive >= 0) {
-    const verdict = state.history.find(h => h.matchIdx === currentLive);
-    if (!verdict || !verdict.verdict) return currentLive;
-  }
-  for (let i = 0; i < SCHEDULE.length; i++) {
-    const m = SCHEDULE[i];
-    if (m.tbd) continue;
-    const ko = getKickoffDate(m);
-    if (!ko) continue;
-    if (ko.getTime() > now) break;
-    const verdict = state.history.find(h => h.matchIdx === i);
-    if (!verdict || !verdict.verdict) return i;
-  }
-  if (nextUpcoming >= 0) return nextUpcoming;
-  return Math.min(state.currentMatchIdx, SCHEDULE.length - 1);
-}
-function findNextMatchIdx() {
-  const now = Date.now();
-  for (let i = 0; i < SCHEDULE.length; i++) {
-    const ko = getKickoffDate(SCHEDULE[i]);
-    if (!ko) continue;
-    if (ko.getTime() > now) return i;
-  }
-  return SCHEDULE.length - 1;
-}
-function getPhase(m) {
-  if (m.tbd) return 'tbd';
-  const ko = getKickoffDate(m);
-  if (!ko) return 'tbd';
-  const ms = ko.getTime() - Date.now();
-  const verdict = state.history.find(h => h.matchIdx === state.currentMatchIdx);
-  if (verdict && verdict.verdict) return 'finished';
-  if (ms > 24 * 3600 * 1000) return 'pre';
-  if (ms > 0) return 'soon';
-  if (ms > -2 * 3600 * 1000) return 'live';
-  return 'overdue';
-}
-function phaseCN(phase) {
-  return ({ pre: '未开赛', soon: '即将开赛', live: '进行中', overdue: '待结果', finished: '已揭晓', tbd: '待定' })[phase] || phase;
+function showBubble(x,y,text){
+  const tank=$('#tank');
+  const b=document.createElement('div');
+  b.className='predict-bubble';
+  b.textContent=text;
+  b.style.left=x+'px';
+  b.style.top=y+'px';
+  tank.appendChild(b);
+  setTimeout(()=>b.remove(),2000);
 }
 
-/* ========== 🐙 预测 AI ========== */
-function octopusPick(match) {
-  const home = TEAMS[match.home], away = TEAMS[match.away];
-  if (!home || !away) return 'home';
-  const homeStrength = (200 - home.rank) + 30;
-  const awayStrength = (200 - away.rank);
-  // 投喂加权
-  const total = state.fedHome + state.fedAway;
-  let pHome = homeStrength / (homeStrength + awayStrength);
-  if (total > 0) {
-    const fed = state.fedHome / total;
-    pHome = (pHome * 0.6) + (fed * 0.4);
-  }
-  return Math.random() < pHome ? 'home' : 'away';
-}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 
 /* ========== 渲染 ========== */
-function renderTop() {
-  $('#hud-octopus').textContent = `× ${state.octopusAlive}`;
-  $('#hud-record').textContent = `${state.correctCount} / ${state.correctCount + state.wrongCount}`;
-  $('#hud-bbq').textContent = `${state.octopusEaten}`;
-  $('#sf-acc').textContent = (state.correctCount + state.wrongCount) === 0 ? '--%' :
-    Math.round(state.correctCount / (state.correctCount + state.wrongCount) * 100) + '%';
-  $('#sf-eaten').textContent = `${state.octopusEaten} / ${state.octopusTotal}`;
+function renderTop(){
+  $('#hud-octopus').textContent='× '+state.octopusAlive;
+  $('#hud-record').textContent=state.correctCount+' / '+(state.correctCount+state.wrongCount);
+  $('#hud-bbq').textContent=String(state.octopusEaten);
+  $('#sf-acc').textContent=(state.correctCount+state.wrongCount)===0?'--%':Math.round(state.correctCount/(state.correctCount+state.wrongCount)*100)+'%';
+  $('#sf-eaten').textContent=state.octopusEaten+' / '+state.octopusTotal;
+  $('#nav-info').textContent=(state.currentMatchIdx+1)+' / '+SCHEDULE.length;
 }
 
-function renderStage() {
-  const idx = state.currentMatchIdx;
-  const m = SCHEDULE[idx];
-  if (!m) return;
-  if (m.tbd) {
-    $('#flag-left').textContent = '❓';
-    $('#flag-right').textContent = '❓';
-    $('#name-left').textContent = '待定';
-    $('#name-right').textContent = '待定';
-    $('#rank-left').textContent = '';
-    $('#rank-right').textContent = '';
-    $('#match-title').textContent = `🏆 ${m.stage}`;
-    $('#match-sub').textContent = m.date;
+function renderStage(){
+  const idx=state.currentMatchIdx,m=SCHEDULE[idx];
+  if(!m)return;
+  if(m.tbd){
+    $('#flag-left').textContent='❓';$('#flag-right').textContent='❓';
+    $('#name-left').textContent='待定';$('#name-right').textContent='待定';
+    $('#rank-left').textContent='';$('#rank-right').textContent='';
+    $('#match-title').textContent='🏆 '+m.stage;$('#match-sub').textContent=m.date;
     return;
   }
-  const home = TEAMS[m.home], away = TEAMS[m.away];
-  $('#flag-left').textContent = home.flag;
-  $('#flag-right').textContent = away.flag;
-  $('#name-left').textContent = home.name;
-  $('#name-right').textContent = away.name;
-  $('#rank-left').textContent = `FIFA #${home.rank} · ${home.group}组`;
-  $('#rank-right').textContent = `FIFA #${away.rank} · ${away.group}组`;
+  const home=TEAMS[m.home],away=TEAMS[m.away];
+  $('#flag-left').textContent=home.flag;$('#flag-right').textContent=away.flag;
+  $('#name-left').textContent=home.name;$('#name-right').textContent=away.name;
+  $('#rank-left').textContent='FIFA #'+home.rank+' · '+home.group+'组';
+  $('#rank-right').textContent='FIFA #'+away.rank+' · '+away.group+'组';
 
-  const phase = getPhase(m);
-  $('#match-vs').style.display = phase === 'finished' ? 'none' : 'flex';
-  if (state.currentPrediction === 'home') $('#match-vs').textContent = '←';
-  else if (state.currentPrediction === 'away') $('#match-vs').textContent = '→';
-  else $('#match-vs').textContent = 'VS';
+  const phase=getPhase(m);
+  $('#match-vs').style.display=phase==='finished'?'none':'flex';
+  if(state.currentPrediction==='home')$('#match-vs').textContent='←';
+  else if(state.currentPrediction==='away')$('#match-vs').textContent='→';
+  else $('#match-vs').textContent='VS';
 
-  $('#pool-left').classList.remove('win', 'lose');
-  $('#pool-right').classList.remove('win', 'lose');
-  const verdict = state.history.find(h => h.matchIdx === idx);
-  if (verdict && verdict.verdict) {
-    if (verdict.result === 'home') $('#pool-left').classList.add('win');
-    else if (verdict.result === 'away') $('#pool-right').classList.add('win');
-  } else if (verdict && verdict.verdict === 'wrong') {
-    if (state.currentPrediction === 'home') $('#pool-left').classList.add('lose');
+  $('#pool-left').classList.remove('win','lose');
+  $('#pool-right').classList.remove('win','lose');
+  const verdict=state.history.find(h=>h.matchIdx===idx);
+  if(verdict&&verdict.verdict==='correct'){
+    if(verdict.result==='home')$('#pool-left').classList.add('win');
+    else if(verdict.result==='away')$('#pool-right').classList.add('win');
+  }else if(verdict&&verdict.verdict==='wrong'){
+    if(state.currentPrediction==='home')$('#pool-left').classList.add('lose');
     else $('#pool-right').classList.add('lose');
   }
 
-  const ko = getKickoffDate(m);
-  const ms = ko ? ko.getTime() - Date.now() : 0;
-  const stageShort = m.stage.replace('小组赛', '小组');
-  $('#match-title').textContent = `⚽ ${stageShort} · ${m.date.slice(5)}`;
-  if (ms > 0) {
-    $('#match-sub').textContent = `⏳ 距开球 ${fmtCountdown(ms)} · 北京时间 ${m.kickoff}`;
-  } else if (ms > -2 * 3600 * 1000) {
-    $('#match-sub').textContent = `🔴 进行中 · 开球 ${m.kickoff}`;
-  } else {
-    $('#match-sub').textContent = `⏱ 已结束 · 等结果`;
-  }
+  const ko=getKickoffDate(m),ms=ko?ko.getTime()-Date.now():0;
+  $('#match-title').textContent='⚽ '+m.stage.replace('小组赛','小组')+' · '+m.date.slice(5);
+  if(ms>0)$('#match-sub').textContent='⏳ 距开球 '+fmtCountdown(ms)+' · 北京时间 '+m.kickoff;
+  else if(ms>-2*3600*1000)$('#match-sub').textContent='🔴 进行中 · 开球 '+m.kickoff;
+  else $('#match-sub').textContent='⏱ 已结束 · 等结果';
 
-  $('#tb-phase').textContent = phaseCN(phase);
-  if (ms > 0) {
-    $('#tb-countdown').textContent = fmtCountdown(ms);
-    $('#tb-countdown').className = 'v';
-  } else if (ms > -2 * 3600 * 1000) {
-    $('#tb-countdown').textContent = '进行中';
-    $('#tb-countdown').className = 'v ok';
-  } else {
-    $('#tb-countdown').textContent = '待输入';
-    $('#tb-countdown').className = 'v danger';
-  }
-  const octoState = state.currentLocked ? (state.currentPrediction === 'home' ? '锁定·主' : '锁定·客') : '巡游中';
-  $('#tb-octo-state').textContent = octoState;
+  $('#tb-phase').textContent=phaseCN(phase);
+  if(ms>0){$('#tb-countdown').textContent=fmtCountdown(ms);$('#tb-countdown').className='v'}
+  else if(ms>-2*3600*1000){$('#tb-countdown').textContent='进行中';$('#tb-countdown').className='v ok'}
+  else{$('#tb-countdown').textContent='待输入';$('#tb-countdown').className='v danger'}
 
+  const octoState=state.currentLocked?(state.currentPrediction==='home'?'锁定·主队':'锁定·客队'):'待预测';
+  $('#tb-octo-state').textContent=octoState;
   moveOctopus();
 }
 
-function renderTimeline() {
-  const tl = $('#timeline');
-  const grouped = {};
-  SCHEDULE.forEach((m, i) => {
-    const k = m.date;
-    if (!grouped[k]) grouped[k] = [];
-    grouped[k].push({ ...m, _idx: i });
-  });
-  let html = '';
-  for (const date of Object.keys(grouped)) {
-    const matches = grouped[date];
-    const d = new Date(date + 'T00:00:00+08:00');
-    const wd = ['日', '一', '二', '三', '四', '五', '六'][d.getDay()];
-    const isToday = isSameDay(d, new Date());
-    html += `<div class="tl-day">`;
-    html += `<div class="tl-day-header"><span class="date">${date.slice(5)} 周${wd}${isToday ? ' · 🔥 今日' : ''}</span><span class="count">${matches.length} 场</span></div>`;
-    for (const m of matches) {
-      const home = TEAMS[m.home];
-      const away = TEAMS[m.away];
-      const isCurrent = m._idx === state.currentMatchIdx;
-      const ko = getKickoffDate(m);
-      const koMs = ko ? ko.getTime() - Date.now() : -1;
-      const past = koMs < -2 * 3600 * 1000;
-      const verdict = state.history.find(h => h.matchIdx === m._idx);
-      let cls = 'tl-match';
-      if (isCurrent) cls += ' current';
-      if (past) cls += ' past';
-      if (verdict) cls += verdict.verdict === 'correct' ? ' alive' : ' dead';
-      let tag = '';
-      if (m.tbd) tag = '<span class="tl-tag">待定</span>';
-      else if (verdict && verdict.verdict) {
-        tag = verdict.verdict === 'correct' ? '<span class="tl-tag done">✓ 活</span>' : '<span class="tl-tag" style="color:var(--blood-2)">✕ 烤</span>';
-      } else if (koMs > 24 * 3600 * 1000) tag = `<span class="tl-tag" style="color:var(--pixel-2)">${fmtCountdown(koMs)}</span>`;
-      else if (koMs > 0) tag = `<span class="tl-tag next">⏱ ${fmtCountdown(koMs)}</span>`;
-      else if (koMs > -2 * 3600 * 1000) tag = '<span class="tl-tag live">● 进行中</span>';
-      else tag = '<span class="tl-tag" style="color:var(--blood-2)">待输入</span>';
-      if (m.tbd) {
-        html += `<div class="${cls}">
-          <div class="tl-time">${m.date.slice(5)}</div>
-          <div class="tl-teams"><div class="tl-team" style="color:var(--pixel-1)">${m.stage}</div></div>
-          <div class="tl-status">${tag}</div>
-        </div>`;
-      } else {
-        html += `<div class="${cls}" data-idx="${m._idx}">
-          <div class="tl-time">${m.kickoff}</div>
-          <div class="tl-teams">
-            <div class="tl-team home"><span class="emo">${home.flag}</span>${home.name}</div>
-            <div class="tl-team away"><span class="emo">${away.flag}</span>${away.name}</div>
-            <div class="tl-group">${m.stage}</div>
-          </div>
-          <div class="tl-status">${tag}</div>
-        </div>`;
-      }
+function renderTimeline(){
+  const tl=$('#timeline'),grouped={};
+  SCHEDULE.forEach((m,i)=>{const k=m.date;if(!grouped[k])grouped[k]=[];grouped[k].push({...m,_idx:i})});
+  let h='';
+  for(const date of Object.keys(grouped)){
+    const matches=grouped[date],d=new Date(date+'T00:00:00+08:00');
+    const wd=['日','一','二','三','四','五','六'][d.getDay()],isToday=isSameDay(d,new Date());
+    h+='<div class="tl-day"><div class="tl-day-header"><span>'+date.slice(5)+' 周'+wd+(isToday?' · 🔥 今日':'')+'</span><span class="count">'+matches.length+' 场</span></div>';
+    for(const m of matches){
+      const home=TEAMS[m.home],away=TEAMS[m.away],isCur=m._idx===state.currentMatchIdx;
+      const ko=getKickoffDate(m),koMs=ko?ko.getTime()-Date.now():-1,past=koMs<-2*3600*1000;
+      const verdict=state.history.find(v=>v.matchIdx===m._idx);
+      let cls='tl-match';if(isCur)cls+=' current';if(past)cls+=' past';
+      if(verdict)cls+=verdict.verdict==='correct'?' alive':' dead';
+      let tag='';
+      if(m.tbd)tag='<span class="tl-tag" style="color:var(--text-0)">待定</span>';
+      else if(verdict&&verdict.verdict)tag=verdict.verdict==='correct'?'<span class="tl-tag done">✓ 活</span>':'<span class="tl-tag" style="color:var(--blood-2)">✕ 烤</span>';
+      else if(koMs>24*3600*1000)tag='<span class="tl-tag" style="color:var(--text-0)">'+fmtCountdown(koMs)+'</span>';
+      else if(koMs>0)tag='<span class="tl-tag next">⏱ '+fmtCountdown(koMs)+'</span>';
+      else if(koMs>-2*3600*1000)tag='<span class="tl-tag live">● 进行中</span>';
+      else tag='<span class="tl-tag" style="color:var(--blood-2)">待输入</span>';
+      if(m.tbd)h+='<div class="'+cls+'"><div class="tl-time">'+m.date.slice(5)+'</div><div class="tl-teams"><div style="color:var(--text-0)">'+m.stage+'</div></div><div class="tl-status">'+tag+'</div></div>';
+      else h+='<div class="'+cls+'" data-idx="'+m._idx+'"><div class="tl-time">'+m.kickoff+'</div><div class="tl-teams"><div class="tl-team home"><span class="emo">'+home.flag+'</span>'+home.name+'</div><div class="tl-team away"><span class="emo">'+away.flag+'</span>'+away.name+'</div><div class="tl-group">'+m.stage+'</div></div><div class="tl-status">'+tag+'</div></div>';
     }
-    html += `</div>`;
+    h+='</div>';
   }
-  tl.innerHTML = html;
-  tl.querySelectorAll('.tl-match[data-idx]').forEach(el => {
-    el.addEventListener('click', () => {
-      const idx = parseInt(el.dataset.idx);
-      if (SCHEDULE[idx].tbd) { toast('该阶段还未抽签 🐙'); return; }
-      state.currentMatchIdx = idx;
-      const verdict = state.history.find(h => h.matchIdx === idx);
-      state.currentPrediction = verdict ? null : (verdict?.prediction ?? null);
-      state.currentLocked = !!verdict;
-      saveState();
-      renderAll();
-    });
-  });
+  tl.innerHTML=h;
+  tl.querySelectorAll('.tl-match[data-idx]').forEach(el=>{el.addEventListener('click',()=>{const idx=parseInt(el.dataset.idx);if(SCHEDULE[idx].tbd){toast('该阶段还未抽签 🐙');return}jumpToMatch(idx)})});
 }
 
-function renderBonePile() {
-  const counts = { home: 0, away: 0 };
-  state.history.forEach(h => {
-    if (h.verdict === 'wrong' && h.prediction) counts[h.prediction]++;
-  });
-  $('#bone-pile-left').innerHTML = Array(counts.home).fill('🦴').map(b => `<span class="b">${b}</span>`).join('');
-  $('#bone-pile-right').innerHTML = Array(counts.away).fill('🦴').map(b => `<span class="b">${b}</span>`).join('');
+function renderBonePile(){
+  const counts={home:0,away:0};
+  state.history.forEach(h=>{if(h.verdict==='wrong'&&h.prediction)counts[h.prediction]++});
+  $('#bone-pile-left').innerHTML=Array(counts.home).fill('🦴').map(b=>'<span class="b">'+b+'</span>').join('');
+  $('#bone-pile-right').innerHTML=Array(counts.away).fill('🦴').map(b=>'<span class="b">'+b+'</span>').join('');
 }
 
-function moveOctopus() {
-  const octo = $('#octopus');
-  const tank = $('#tank');
-  if (!tank) return;
-  const tw = tank.clientWidth;
-  const th = tank.clientHeight;
-  const phase = getPhase(SCHEDULE[state.currentMatchIdx]);
-  const pred = state.currentPrediction;
-  let tx = tw * 0.5, ty = th * 0.5;
-  if (pred === 'home') { tx = tw * 0.18; ty = th * 0.55; }
-  else if (pred === 'away') { tx = tw * 0.82; ty = th * 0.55; }
-  else if (phase === 'pre') { tx = tw * (0.3 + Math.random() * 0.4); ty = th * (0.4 + Math.random() * 0.3); }
-  octo.style.left = tx + 'px';
-  octo.style.top = ty + 'px';
+function moveOctopus(){
+  const octo=$('#octopus'),tank=$('#tank');if(!tank)return;
+  const tw=tank.clientWidth,th=tank.clientHeight;
+  const phase=getPhase(SCHEDULE[state.currentMatchIdx]),pred=state.currentPrediction;
+  let tx=tw*.5,ty=th*.5;
+  if(pred==='home'){tx=tw*.15;ty=th*.52}
+  else if(pred==='away'){tx=tw*.85;ty=th*.52}
+  else if(phase==='pre'){tx=tw*(.3+Math.random()*.4);ty=th*(.4+Math.random()*.3)}
+  octo.style.left=tx+'px';octo.style.top=ty+'px';
 }
 
 /* ========== 投喂 ========== */
-function feed(side) {
-  if (state.currentLocked) {
-    toast('🐙 哥已经决定了，再投也没用');
-    return;
-  }
-  if (side === 'home') state.fedHome++;
-  else state.fedAway++;
-  moveOctopus();
-  audio.beep();
-  const m = SCHEDULE[state.currentMatchIdx];
-  const teamName = TEAMS[side === 'home' ? m.home : m.away].name;
-  toast(`投喂了 ${teamName}（${side === 'home' ? state.fedHome : state.fedAway} 次）`);
+function feed(side){
+  if(state.currentLocked){toast('保罗已经决定了，再投也没用');return}
+  if(side==='home')state.fedHome++;else state.fedAway++;
+  moveOctopus();audio.beep();
+  const m=SCHEDULE[state.currentMatchIdx];
+  const teamName=TEAMS[side==='home'?m.home:m.away].name;
+  toast('投喂了 '+teamName+'（'+(side==='home'?state.fedHome:state.fedAway)+' 次）');
   saveState();
 }
 
-/* ========== 行刑：揭晓比赛结果 ========== */
-function executeVerdict(result) {
-  const idx = state.currentMatchIdx;
-  const m = SCHEDULE[idx];
-  if (!m) return;
-  const predict = state.currentPrediction;
-  const correct = (result === 'draw' ? false : predict === result);
-
-  state.history.push({
-    matchIdx: idx,
-    match: `${m.home} vs ${m.away}`,
-    prediction: predict,
-    result,
-    verdict: correct ? 'correct' : 'wrong',
-    time: Date.now(),
-  });
-
-  if (correct) {
-    state.correctCount++;
-    audio.fanfare();
-    $('#octopus').classList.add('dying'); // 用一个 class 触发
-    setTimeout(() => $('#octopus').classList.remove('dying'), 1500);
-    toast('🎉 押中了！🐙 哥得意地吐了口墨水。');
-  } else {
-    state.wrongCount++;
-    state.octopusEaten++;
-    state.octopusAlive = Math.max(0, state.octopusAlive - 1);
-    audio.scream();
-    setTimeout(() => audio.shoot(), 350);
-    setTimeout(() => audio.sizzle(), 700);
-    $('#octopus').classList.add('dying');
-    showBBQ(predict);
-    setTimeout(() => $('#octopus').classList.remove('dying'), 3500);
-  }
-
-  state.currentPrediction = null;
-  state.currentLocked = false;
-  state.fedHome = 0;
-  state.fedAway = 0;
-  state.deadId++;
-
-  setTimeout(() => {
-    const next = findCurrentMatchIdx();
-    state.currentMatchIdx = next;
-    saveState();
-    renderAll();
-  }, correct ? 2000 : 4500);
-}
-
-function showBBQ(predict) {
-  const m = SCHEDULE[state.currentMatchIdx];
-  const teamName = TEAMS[predict === 'home' ? m.home : m.away].name;
-  $('#bbq-text').textContent = `🍢 烤了一只！${teamName}粉已下肚`;
-  $('#bbq-count').textContent = `🍢 累计烧烤：${state.octopusEaten} 只 · 还剩 ${state.octopusAlive} 只`;
-  $('#bbq').classList.add('show');
-  // 红屏闪 + 血溅
-  showKillFlash();
-  // 加一根骨
-  addBone(predict);
-  setTimeout(() => $('#bbq').classList.remove('show'), 3500);
-}
-
-function showKillFlash() {
-  const flash = document.createElement('div');
-  flash.className = 'kill-flash';
-  document.body.appendChild(flash);
-  setTimeout(() => flash.remove(), 600);
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-  for (let i = 0; i < 24; i++) {
-    const s = document.createElement('div');
-    s.className = 'splash';
-    s.style.left = cx + 'px';
-    s.style.top = cy + 'px';
-    const angle = Math.random() * Math.PI * 2;
-    const dist = 80 + Math.random() * 280;
-    s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-    s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
-    s.style.background = Math.random() < 0.3 ? '#ff3a3a' : '#b02a2a';
-    s.style.width = (6 + Math.random() * 12) + 'px';
-    s.style.height = s.style.width;
-    document.body.appendChild(s);
-    setTimeout(() => s.remove(), 800);
-  }
-}
-
-function addBone(side) {
-  const counts = { home: 0, away: 0 };
-  state.history.forEach(h => {
-    if (h.verdict === 'wrong' && h.prediction) counts[h.prediction]++;
-  });
-  const el = side === 'home' ? $('#bone-pile-left') : $('#bone-pile-right');
-  el.innerHTML = Array(counts[side]).fill('🦴').map((b, i) => `<span class="b${i === counts[side] - 1 ? ' fresh' : ''}">${b}</span>`).join('');
-  const el2 = side === 'home' ? $('#bone-pile-right') : $('#bone-pile-left');
-  el2.innerHTML = Array(counts[side === 'home' ? 'away' : 'home']).fill('🦴').join('');
-}
-
-/* ========== 输入比赛结果 ========== */
-function showResultInput() {
-  const m = SCHEDULE[state.currentMatchIdx];
-  if (!m || m.tbd) return;
-  const phase = getPhase(m);
-  if (phase === 'pre' || phase === 'soon') {
-    toast('比赛还没开球呢 ⏳');
-    return;
-  }
-  const home = TEAMS[m.home], away = TEAMS[m.away];
-  const body = `
-    <div class="modal-row"><span class="lbl">比赛</span><span class="val">${home.flag} ${home.name} vs ${away.flag} ${away.name}</span></div>
-    <div class="modal-row"><span class="lbl">开球</span><span class="val">${m.date} ${m.kickoff}</span></div>
-    <div class="modal-row"><span class="lbl">🐙 押了</span><span class="val" style="color:var(--gold)">${
-      state.currentPrediction === 'home' ? home.flag + ' ' + home.name :
-      state.currentPrediction === 'away' ? away.flag + ' ' + away.name : '（未预测）'
-    }</span></div>
-    <p style="margin-top: 14px; color: var(--pixel-2); font-size: 8px; line-height: 1.6;">
-      输入实际比分来揭晓 🐙 保罗的命运。<br>
-      或者直接点下方按钮快速选择赢家。
-    </p>
-    <div class="btn-row">
-      <button class="btn feed-home" onclick="executeVerdict('home')">🏠 ${home.name} 胜</button>
-      <button class="btn feed-away" onclick="executeVerdict('away')">✈️ ${away.name} 胜</button>
-    </div>
-    <div class="btn-row">
-      <button class="btn" onclick="executeVerdict('draw')">🤝 平局</button>
-      <button class="btn" style="color:var(--pixel-1)" onclick="closeModal()">取消</button>
-    </div>
-  `;
-  openModal(`📥 输入结果 · ${home.flag}${home.name} vs ${away.flag}${away.name}`, body);
-}
-
-/* ========== 战报 ========== */
-function showReport() {
-  const body = `
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px;">
-      <div class="sf-box"><div class="k">🐙 存活</div><div class="v ok">${state.octopusAlive}</div></div>
-      <div class="sf-box danger"><div class="k">🍢 已烤</div><div class="v">${state.octopusEaten}</div></div>
-      <div class="sf-box"><div class="k">✓ 正确</div><div class="v ok">${state.correctCount}</div></div>
-      <div class="sf-box"><div class="k">✕ 错误</div><div class="v danger">${state.wrongCount}</div></div>
-    </div>
-    <p style="color: var(--gold); font-size: 9px; margin-bottom: 8px;">📜 历史战报</p>
-    <div style="max-height: 320px; overflow-y: auto;">
-      ${state.history.length === 0 ? '<p style="color: var(--pixel-1); font-size: 9px; text-align: center; padding: 20px;">还没战绩。等待开赛。</p>' :
-        state.history.slice().reverse().map(h => {
-          const m = SCHEDULE[h.matchIdx];
-          return `<div class="report-item">
-            <div>
-              <div style="color: var(--pixel-3); font-size: 8px;">${m ? m.date + ' ' + m.kickoff : '?'}</div>
-              <div style="color: var(--pixel-2); font-size: 7px;">${h.match}</div>
-            </div>
-            <div class="ri-mid">押: ${h.prediction === 'home' ? '主' : h.prediction === 'away' ? '客' : '—'} → ${h.result === 'home' ? '主' : h.result === 'away' ? '客' : '平'}</div>
-            <div class="ri-outcome ${h.verdict}">${h.verdict === 'correct' ? '✓ 活' : '✕ 烤'}</div>
-          </div>`;
-        }).join('')
-      }
-    </div>
-    <div class="btn-row">
-      <button class="btn log" onclick="exportData()">💾 导出数据</button>
-      <button class="btn" style="color: var(--blood-2)" onclick="resetGame()">🗑 重置赛季</button>
-    </div>
-  `;
-  openModal('📜 战报历史 · 整个赛季', body);
-}
-
-/* ========== 观众竞猜 ========== */
-const ODDS = [100, 50, 20, 10, 5, 3, 2, 1.5, 1.2];
-
-function showBetting() {
-  const body = `
-    <p style="color: var(--pixel-2); font-size: 9px; line-height: 1.8; margin-bottom: 10px;">
-      押注：本届世界杯结束前，一共能吃几只 🐙？<br>
-      猜中将以"先知"身份入选名人堂。
-    </p>
-    ${renderOddsTable()}
-    <div style="display: flex; gap: 8px; align-items: center; margin-top: 10px;">
-      <input class="pixel-input" id="bet-name" placeholder="你的名号" maxlength="12" style="flex: 1;">
-      <input class="pixel-input" id="bet-guess" type="number" min="0" max="8" placeholder="几只" style="width: 80px;">
-    </div>
-    <div class="btn-row">
-      <button class="btn bet" onclick="submitBet()">🎰 下 注</button>
-      <button class="btn" onclick="closeModal()">取消</button>
-    </div>
-    <div id="bet-list" style="margin-top: 14px;"></div>
-  `;
-  openModal('🎰 观众竞猜 · 吃几只 🐙', body);
-  renderBetList();
-}
-
-function renderOddsTable() {
-  const totals = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  state.bets.forEach(b => { if (b.guess >= 0 && b.guess <= 8) totals[b.guess]++; });
-  const eaten = state.octopusEaten;
-  const alive = state.octopusAlive;
-  return `<div style="display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; margin: 10px 0;">
-    ${ODDS.map((base, i) => {
-      let cls = '';
-      let oo = base + 'x';
-      if (i <= eaten) { cls = 'loser'; oo = '✕'; }
-      else if (i === eaten + 1) { cls = 'edge'; oo = (base * 0.5).toFixed(2) + 'x'; }
-      else if (i > eaten + 1) {
-        const factor = Math.max(0.5, 1 - alive / state.octopusTotal);
-        oo = Math.max(1.05, base * factor).toFixed(2) + 'x';
-      }
-      const style = cls === 'loser' ? 'background:var(--bg-0);border:2px solid var(--blood);opacity:0.4;color:var(--pixel-1);' :
-                  cls === 'edge' ? 'background:var(--bg-0);border:2px solid var(--gold);' :
-                  'background:var(--bg-0);border:2px solid var(--pixel-0);';
-      return `<div style="${style} padding: 6px 2px; text-align: center;">
-        <div style="color:var(--pixel-2);font-size:7px;">押${i}只</div>
-        <div style="color:${cls === 'loser' ? 'var(--pixel-1)' : 'var(--gold)'};font-size:11px;margin:2px 0;font-family:'VT323',monospace;">${oo}</div>
-        <div style="color:var(--water-3);font-size:7px;">👥${totals[i]}</div>
-      </div>`;
-    }).join('')}
-  </div>
-  <p style="text-align: center; color: var(--pixel-1); font-size: 8px; margin-top: 6px;">
-    当前已烤 <span style="color:var(--blood-2)">${eaten}</span> 只 · 赔率随比赛进行实时调整
-  </p>`;
-}
-
-function submitBet() {
-  const name = $('#bet-name').value.trim() || '匿名看客';
-  const guess = parseInt($('#bet-guess').value);
-  if (isNaN(guess) || guess < 0 || guess > 8) {
-    toast('请输入 0-8 之间的数字');
-    return;
-  }
-  state.bets.push({ name, guess, time: Date.now() });
+/* ========== 行刑 ========== */
+function executeVerdict(result){
+  const idx=state.currentMatchIdx,m=SCHEDULE[idx];if(!m)return;
+  const predict=state.currentPrediction,correct=(result==='draw'?false:predict===result);
+  state.history.push({matchIdx:idx,match:m.home+' vs '+m.away,prediction:predict,result,verdict:correct?'correct':'wrong',time:Date.now()});
+  if(correct){state.correctCount++;audio.fanfare();$('#octopus').classList.add('dying');setTimeout(()=>$('#octopus').classList.remove('dying'),1500);toast('🎉 押中了！保罗得意地吐了口墨水。')}
+  else{state.wrongCount++;state.octopusEaten++;state.octopusAlive=Math.max(0,state.octopusAlive-1);audio.scream();setTimeout(()=>audio.shoot(),350);setTimeout(()=>audio.sizzle(),700);$('#octopus').classList.add('dying');showBBQ(predict);setTimeout(()=>$('#octopus').classList.remove('dying'),3500)}
+  state.currentPrediction=null;state.currentLocked=false;state.fedHome=0;state.fedAway=0;state.deadId++;
   saveState();
-  $('#bet-name').value = '';
-  $('#bet-guess').value = '';
-  audio.beep();
-  toast(`已下注：${name} 猜吃 ${guess} 只`);
-  showBetting();
+  setTimeout(()=>{const next=findCurrentMatchIdx();state.currentMatchIdx=next;saveState();renderAll()},correct?2000:4500);
 }
 
-function renderBetList() {
-  const el = $('#bet-list');
-  if (el) el.innerHTML = renderBetListHtml();
+function showBBQ(predict){
+  const m=SCHEDULE[state.currentMatchIdx];
+  const teamName=TEAMS[predict==='home'?m.home:m.away].name;
+  $('#bbq-text').textContent='🍢 烤了一只！'+teamName+'粉已下肚';
+  $('#bbq-count').textContent='🍢 累计烧烤：'+state.octopusEaten+' 只 · 还剩 '+state.octopusAlive+' 只';
+  $('#bbq').classList.add('show');showKillFlash();addBone(predict);
+  setTimeout(()=>$('#bbq').classList.remove('show'),3500);
 }
 
-function renderBetListHtml() {
-  if (state.bets.length === 0) {
-    return '<p style="color: var(--pixel-1); font-size: 8px; text-align: center; padding: 20px;">还没人下注，来当第一个预言家。</p>';
+function showKillFlash(){
+  const flash=document.createElement('div');flash.className='kill-flash';document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),600);
+  const cx=window.innerWidth/2,cy=window.innerHeight/2;
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');s.className='splash';
+    s.style.left=cx+'px';s.style.top=cy+'px';
+    const angle=Math.random()*Math.PI*2,dist=60+Math.random()*250;
+    s.style.setProperty('--dx',Math.cos(angle)*dist+'px');s.style.setProperty('--dy',Math.sin(angle)*dist+'px');
+    s.style.background=Math.random()<.3?'#e74c3c':'#c0392b';
+    s.style.width=(5+Math.random()*10)+'px';s.style.height=s.style.width;
+    document.body.appendChild(s);setTimeout(()=>s.remove(),700);
   }
-  const sorted = [...state.bets].sort((a, b) => a.guess - b.guess);
-  return `
-    <p style="color: var(--gold); font-size: 9px; margin: 12px 0 6px;">👥 观众下注榜（共 ${state.bets.length} 人）</p>
-    <div style="max-height: 220px; overflow-y: auto;">
-      ${sorted.map(b => {
-        const cls = b.guess < state.octopusEaten ? 'loser' : b.guess === state.octopusEaten ? 'edge' : '';
-        const style = cls === 'loser' ? 'opacity:0.4;' : cls === 'edge' ? 'color:var(--green);' : '';
-        return `<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: var(--bg-0); border: 2px solid var(--pixel-0); margin-bottom: 4px; ${style}">
-          <span style="color: var(--pixel-3); font-size: 9px;">${b.name}</span>
-          <span style="color: var(--gold); font-size: 10px; font-family: 'VT323', monospace;">${b.guess} 只</span>
-        </div>`;
-      }).join('')}
-    </div>
-  `;
 }
 
-/* ========== Modal & Toast ========== */
-function openModal(title, body) {
-  $('#modal-title').textContent = title;
-  $('#modal-body').innerHTML = body;
-  $('#modal').classList.add('show');
-}
-function closeModal() { $('#modal').classList.remove('show'); }
-
-let toastTimer = null;
-function toast(msg) {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+function addBone(side){
+  const counts={home:0,away:0};
+  state.history.forEach(h=>{if(h.verdict==='wrong'&&h.prediction)counts[h.prediction]++});
+  const el=side==='home'?$('#bone-pile-left'):$('#bone-pile-right');
+  el.innerHTML=Array(counts[side]).fill('🦴').map((b,i)=>'<span class="b'+(i===counts[side]-1?' fresh':'')+'">'+b+'</span>').join('');
+  const el2=side==='home'?$('#bone-pile-right'):$('#bone-pile-left');
+  el2.innerHTML=Array(counts[side==='home'?'away':'home']).fill('🦴').join('');
 }
 
-function exportData() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `octopus-worldcup-${new Date().toISOString().slice(0, 10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('已导出存档');
+function showResultInput(){
+  const m=SCHEDULE[state.currentMatchIdx];if(!m||m.tbd)return;
+  const phase=getPhase(m);if(phase==='pre'||phase==='soon'){toast('比赛还没开球呢 ⏳');return}
+  const home=TEAMS[m.home],away=TEAMS[m.away];
+  const body='<div class="modal-row"><span class="lbl">比赛</span><span class="val">'+home.flag+' '+home.name+' vs '+away.flag+' '+away.name+'</span></div>'+
+    '<div class="modal-row"><span class="lbl">开球</span><span class="val">'+m.date+' '+m.kickoff+'</span></div>'+
+    '<div class="modal-row"><span class="lbl">🐙 押了</span><span class="val" style="color:var(--gold)">'+
+    (state.currentPrediction==='home'?home.flag+' '+home.name:state.currentPrediction==='away'?away.flag+' '+away.name:'（未预测）')+'</span></div>'+
+    '<p style="margin-top:12px;color:var(--text-0);font-size:12px">输入实际比分来揭晓保罗的命运。</p>'+
+    '<div class="btn-row"><button class="btn feed-home" onclick="executeVerdict(\'home\')">🏠 '+home.name+' 胜</button>'+
+    '<button class="btn feed-away" onclick="executeVerdict(\'away\')">✈️ '+away.name+' 胜</button></div>'+
+    '<div class="btn-row"><button class="btn" onclick="executeVerdict(\'draw\')">🤝 平局</button>'+
+    '<button class="btn" style="color:var(--text-0)" onclick="closeModal()">取消</button></div>';
+  openModal('📥 输入结果 · '+home.flag+home.name+' vs '+away.flag+away.name,body);
 }
 
-/* ========== 8-bit 音效（Web Audio） ========== */
-let audioCtx = null;
-function getCtx() {
-  if (!audioCtx) {
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
-  }
-  return audioCtx;
+function showReport(){
+  const body='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px">'+
+    '<div class="sf-box"><div class="k">存活</div><div class="v ok">'+state.octopusAlive+'</div></div>'+
+    '<div class="sf-box danger"><div class="k">已烤</div><div class="v">'+state.octopusEaten+'</div></div>'+
+    '<div class="sf-box"><div class="k">正确</div><div class="v ok">'+state.correctCount+'</div></div>'+
+    '<div class="sf-box"><div class="k">错误</div><div class="v danger">'+state.wrongCount+'</div></div></div>'+
+    '<p style="color:var(--gold);font-size:13px;font-weight:700;margin-bottom:8px">📜 历史战报</p>'+
+    '<div style="max-height:300px;overflow-y:auto">'+
+    (state.history.length===0?'<p style="color:var(--text-0);text-align:center;padding:20px">还没战绩。等待开赛。</p>':
+    state.history.slice().reverse().map(h=>{const m=SCHEDULE[h.matchIdx];return'<div class="report-item"><div><div style="color:var(--text-2);font-size:12px">'+(m?m.date+' '+m.kickoff:'?')+'</div><div style="color:var(--text-0);font-size:11px">'+h.match+'</div></div><div class="ri-mid">押:'+(h.prediction==='home'?'主':h.prediction==='away'?'客':'—')+' → '+(h.result==='home'?'主':h.result==='away'?'客':'平')+'</div><div class="ri-outcome '+(h.verdict==='correct'?'win':'lose')+'">'+(h.verdict==='correct'?'✓ 活':'✕ 烤')+'</div></div>'}).join(''))+
+    '</div><div class="btn-row"><button class="btn log" onclick="exportData()">💾 导出数据</button><button class="btn" style="color:var(--blood-2)" onclick="resetGame()">🗑 重置赛季</button></div>';
+  openModal('📜 战报历史',body);
 }
-function beep(freq, dur, type = 'square', vol = 0.05) {
-  const ctx = getCtx();
-  if (!ctx) return;
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = type;
-  osc.frequency.value = freq;
-  gain.gain.setValueAtTime(vol, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start();
-  osc.stop(ctx.currentTime + dur);
+
+const ODDS=[100,50,20,10,5,3,2,1.5,1.2];
+function showBetting(){
+  const body='<p style="color:var(--text-0);font-size:12px;line-height:1.8;margin-bottom:10px">押注：本届世界杯结束前，一共能吃几只 🐙？</p>'+renderOddsTable()+
+    '<div style="display:flex;gap:8px;align-items:center;margin-top:10px"><input class="pixel-input" id="bet-name" placeholder="你的名号" maxlength="12" style="flex:1"><input class="pixel-input" id="bet-guess" type="number" min="0" max="8" placeholder="几只" style="width:80px"></div>'+
+    '<div class="btn-row"><button class="btn bet" onclick="submitBet()">🎰 下 注</button><button class="btn" onclick="closeModal()">取消</button></div><div id="bet-list" style="margin-top:14px"></div>';
+  openModal('🎰 观众竞猜',body);renderBetList();
 }
-const audio = {
-  beep: () => beep(660, 0.05),
-  shoot: () => { beep(80, 0.4, 'sawtooth', 0.2); setTimeout(() => beep(40, 0.3, 'sawtooth', 0.15), 100); },
-  scream: () => {
-    const ctx = getCtx(); if (!ctx) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(900, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.6);
-    gain.gain.setValueAtTime(0.15, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.65);
-  },
-  sizzle: () => {
-    for (let i = 0; i < 12; i++) {
-      setTimeout(() => beep(800 + Math.random() * 600, 0.04, 'square', 0.04), i * 60);
-    }
-  },
-  fanfare: () => {
-    [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.15), i * 100));
-  },
+function renderOddsTable(){
+  const totals=[0,0,0,0,0,0,0,0,0];state.bets.forEach(b=>{if(b.guess>=0&&b.guess<=8)totals[b.guess]++});
+  const eaten=state.octopusEaten,alive=state.octopusAlive;
+  return'<div style="display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin:10px 0">'+ODDS.map((base,i)=>{
+    let cls='',oo=base+'x';
+    if(i<=eaten){cls='loser';oo='✕'}else if(i===eaten+1){cls='edge';oo=(base*.5).toFixed(2)+'x'}else{const f=Math.max(.5,1-alive/state.octopusTotal);oo=Math.max(1.05,base*f).toFixed(2)+'x'}
+    const bg=cls==='loser'?'background:var(--bg-0);opacity:.35;color:var(--text-0)':cls==='edge'?'background:var(--bg-0);border:2px solid var(--gold)':'background:var(--bg-0);border:2px solid rgba(255,255,255,.08)';
+    return'<div style="'+bg+';padding:6px 2px;text-align:center;border-radius:6px"><div style="color:var(--text-0);font-size:10px">押'+i+'只</div><div style="color:'+(cls==='loser'?'var(--text-0)':'var(--gold)')+';font-size:12px;font-weight:700;margin:2px 0;font-family:JetBrains Mono,monospace">'+oo+'</div><div style="color:var(--water-3);font-size:10px">👥'+totals[i]+'</div></div>'
+  }).join('')+'</div><p style="text-align:center;color:var(--text-0);font-size:11px;margin-top:6px">当前已烤 <span style="color:var(--blood-2);font-weight:700">'+eaten+'</span> 只</p>';
+}
+function submitBet(){
+  const name=$('#bet-name').value.trim()||'匿名看客',guess=parseInt($('#bet-guess').value);
+  if(isNaN(guess)||guess<0||guess>8){toast('请输入 0-8 之间的数字');return}
+  state.bets.push({name,guess,time:Date.now()});saveState();
+  $('#bet-name').value='';$('#bet-guess').value='';audio.beep();
+  toast('已下注：'+name+' 猜吃 '+guess+' 只');showBetting();
+}
+function renderBetList(){
+  const el=$('#bet-list');if(el)el.innerHTML=renderBetListHtml();
+}
+function renderBetListHtml(){
+  if(state.bets.length===0)return'<p style="color:var(--text-0);font-size:12px;text-align:center;padding:20px">还没人下注，来当第一个预言家。</p>';
+  const sorted=[...state.bets].sort((a,b)=>a.guess-b.guess);
+  return'<p style="color:var(--gold);font-size:13px;font-weight:700;margin:12px 0 6px">👥 下注榜（'+state.bets.length+' 人）</p><div style="max-height:200px;overflow-y:auto">'+sorted.map(b=>{
+    const cls=b.guess<state.octopusEaten?'loser':b.guess===state.octopusEaten?'edge':'';
+    const style=cls==='loser'?'opacity:.4':cls==='edge'?'color:var(--green)':'';
+    return'<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg-0);border-radius:6px;margin-bottom:4px;'+style+'"><span style="font-size:13px">'+b.name+'</span><span style="color:var(--gold);font-size:14px;font-weight:700;font-family:JetBrains Mono,monospace">'+b.guess+' 只</span></div>'
+  }).join('')+'</div>';
+}
+
+function openModal(t,b){$('#modal-title').textContent=t;$('#modal-body').innerHTML=b;$('#modal').classList.add('show')}
+function closeModal(){$('#modal').classList.remove('show')}
+let toastTimer=null;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
+function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='octopus-worldcup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);toast('已导出存档')}
+
+/* ========== 音效 ========== */
+let audioCtx=null;
+function getCtx(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}return audioCtx}
+function beep(freq,dur,type='square',vol=.05){const ctx=getCtx();if(!ctx)return;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(vol,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+dur)}
+const audio={
+  beep:()=>beep(660,.05),
+  shoot:()=>{beep(80,.4,'sawtooth',.2);setTimeout(()=>beep(40,.3,'sawtooth',.15),100)},
+  scream:()=>{const ctx=getCtx();if(!ctx)return;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sawtooth';osc.frequency.setValueAtTime(900,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(60,ctx.currentTime+.6);gain.gain.setValueAtTime(.15,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.6);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.65)},
+  sizzle:()=>{for(let i=0;i<12;i++)setTimeout(()=>beep(800+Math.random()*600,.04,'square',.04),i*60)},
+  fanfare:()=>{[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.15),i*100))},
 };
 
-/* ========== 气泡 ========== */
-function spawnBubbles() {
-  const tank = $('#tank');
-  tank.querySelectorAll('.bubble').forEach(b => b.remove());
-  for (let i = 0; i < 12; i++) {
-    const b = document.createElement('div');
-    b.className = 'bubble';
-    const size = 4 + Math.random() * 8;
-    b.style.width = size + 'px';
-    b.style.height = size + 'px';
-    b.style.left = (Math.random() * 100) + '%';
-    b.style.animationDuration = (5 + Math.random() * 8) + 's';
-    b.style.animationDelay = (Math.random() * 5) + 's';
-    tank.appendChild(b);
-  }
-}
+function spawnBubbles(){const tank=$('#tank');tank.querySelectorAll('.bubble').forEach(b=>b.remove());for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const s=4+Math.random()*8;b.style.width=s+'px';b.style.height=s+'px';b.style.left=(Math.random()*100)+'%';b.style.animationDuration=(5+Math.random()*8)+'s';b.style.animationDelay=(Math.random()*5)+'s';tank.appendChild(b)}}
 
-/* ========== 循环 ========== */
-function tick() {
-  const now = new Date();
-  $('#clock').textContent = fmtClock(now);
-
-  // 自动推进比赛
-  const target = findCurrentMatchIdx();
-  if (target !== state.currentMatchIdx) {
-    state.currentMatchIdx = target;
-    state.fedHome = 0;
-    state.fedAway = 0;
-    const m = SCHEDULE[target];
-    if (m && !m.tbd) {
-      state.currentPrediction = octopusPick(m);
-      state.currentLocked = true;
-    }
+function tick(){
+  $('#clock').textContent=fmtClock(new Date());
+  const target=findCurrentMatchIdx();
+  if(target!==state.currentMatchIdx){
+    state.currentMatchIdx=target;state.fedHome=0;state.fedAway=0;
+    state.currentPrediction=null;state.currentLocked=false;
     saveState();
   }
-
-  renderTop();
-  renderStage();
-  renderTimeline();
-  renderBonePile();
+  renderTop();renderStage();renderTimeline();renderBonePile();
 }
 
-function renderAll() {
-  renderTop();
-  renderStage();
-  renderTimeline();
-  renderBonePile();
-}
+function renderAll(){renderTop();renderStage();renderTimeline();renderBonePile()}
 
 /* ========== 事件 ========== */
-$('#btn-feed-home').addEventListener('click', () => feed('home'));
-$('#btn-feed-away').addEventListener('click', () => feed('away'));
-$('#btn-bet').addEventListener('click', showBetting);
-$('#btn-log').addEventListener('click', showReport);
-$('#modal-close').addEventListener('click', closeModal);
-$('#modal').addEventListener('click', (e) => { if (e.target === $('#modal')) closeModal(); });
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModal();
-  if (e.key === '1') feed('home');
-  if (e.key === '2') feed('away');
-  if (e.key === '3') showBetting();
-  if (e.key === '4') showReport();
-  if (e.key === ' ') { e.preventDefault(); showResultInput(); }
+$('#btn-prev').addEventListener('click',()=>navMatch(-1));
+$('#btn-next').addEventListener('click',()=>navMatch(1));
+$('#btn-feed-home').addEventListener('click',()=>feed('home'));
+$('#btn-feed-away').addEventListener('click',()=>feed('away'));
+$('#btn-predict').addEventListener('click',()=>doPrediction());
+$('#btn-bet').addEventListener('click',showBetting);
+$('#btn-log').addEventListener('click',showReport);
+$('#modal-close').addEventListener('click',closeModal);
+$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeModal();
+  if(e.key==='ArrowLeft'){e.preventDefault();navMatch(-1)}
+  if(e.key==='ArrowRight'){e.preventDefault();navMatch(1)}
+  if(e.key==='1')feed('home');
+  if(e.key==='2')feed('away');
+  if(e.key==='p'||e.key==='P'){e.preventDefault();doPrediction()}
+  if(e.key==='b'||e.key==='B')showBetting();
+  if(e.key==='l'||e.key==='L')showReport();
+  if(e.key===' '){e.preventDefault();showResultInput()}
 });
+window.executeVerdict=executeVerdict;window.submitBet=submitBet;window.exportData=exportData;window.resetGame=resetGame;window.closeModal=closeModal;
 
-window.executeVerdict = executeVerdict;
-window.submitBet = submitBet;
-window.exportData = exportData;
-window.resetGame = resetGame;
-window.closeModal = closeModal;
-
-/* ========== 启动 ========== */
-function init() {
+function init(){
   spawnBubbles();
-
-  // 初始化 currentMatchIdx
-  state.currentMatchIdx = findCurrentMatchIdx();
-  const m = SCHEDULE[state.currentMatchIdx];
-  if (m && !m.tbd) {
-    state.currentPrediction = octopusPick(m);
-    state.currentLocked = true;
-  }
-  saveState();
-  renderAll();
-
-  setInterval(tick, 1000);
-  tick();
-  setInterval(spawnBubbles, 10 * 60 * 1000);
-
-  // 第一次用户点击激活音频
-  document.addEventListener('click', () => getCtx(), { once: true });
+  state.currentMatchIdx=findCurrentMatchIdx();
+  saveState();renderAll();
+  setInterval(tick,1000);tick();
+  setInterval(spawnBubbles,10*60*1000);
+  document.addEventListener('click',()=>getCtx(),{once:true});
 }
-
 init();
 </script>
 </body>
